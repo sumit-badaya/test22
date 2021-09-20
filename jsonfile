@@ -1,0 +1,4684 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Management API",
+    "version": 1.7,
+    "description": "Allows for the configuration of the Unified Data Platform (UDP) and the domain-first structures within."
+  },
+  "servers": [
+    {
+      "url": "https://openfaas.udp1non.aws.nml.com",
+      "description": "dev"
+    },
+    {
+      "url": "https://openfaas.udp2non.aws.nml.com",
+      "description": "reg"
+    },
+    {
+      "url": "https://openfaas.udp.aws.nml.com",
+      "description": "prod"
+    }
+  ],
+  "paths": {
+    "/api/v1/domain/domains/{domain}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/domain"
+        }
+      ],
+      "put": {
+        "summary": "Create a domain",
+        "description": "Creates a new domain object. A domain enables the contextual grouping of related services and datasets, and provides both physical and logical security boundaries. Domains must contain only letters (`a-z`, `A-Z`). A domain is case-insensitive with a maximum length of `1024` characters. Note sources, datasets, services, and schemas will be unique within a domain, but not across domains.",
+        "tags": [
+          "Domains"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/newDomain"
+              },
+              "examples": {
+                "DEPARTMENT_BUSINESS": {
+                  "value": {
+                    "displayName": "Department/Business IPS",
+                    "description": "Investment, products, and services",
+                    "type": "DEPARTMENT_BUSINESS",
+                    "owners": [
+                      {
+                        "type": "INDIVIDUAL",
+                        "name": "Joe Sakic",
+                        "lanId": "sak0091",
+                        "domainRole": "testDomain"
+                      },
+                      {
+                        "name": "Sarah Connor",
+                        "type": "INDIVIDUAL",
+                        "lanId": "con1997",
+                        "domainRole": "testDomain"
+                      }
+                    ],
+                    "accessGroups": [
+                      "WG-T-800",
+                      "WG-T-1000"
+                    ],
+                    "dataProducers": [
+                      "WG-RESISTANCE"
+                    ],
+                    "tags": "INTERNAL,SKYNET"
+                  }
+                },
+                "ENTERPRISE": {
+                  "value": {
+                    "displayName": "Enterprise IPS",
+                    "description": "Investment, products, and services",
+                    "type": "ENTERPRISE",
+                    "owners": [
+                      {
+                        "name": "Joe Sakic",
+                        "type": "INDIVIDUAL",
+                        "lanId": "sak0091",
+                        "domainRole": "testDomain"
+                      },
+                      {
+                        "name": "Sarah Connor",
+                        "type": "INDIVIDUAL",
+                        "lanId": "con1997",
+                        "domainRole": "testDomain"
+                      }
+                    ],
+                    "accessGroups": [
+                      "WG-T-800",
+                      "WG-T-1000"
+                    ],
+                    "dataProducers": [
+                      "WG-RESISTANCE"
+                    ],
+                    "tags": "INTERNAL,SKYNET"
+                  }
+                },
+                "SANDBOX": {
+                  "value": {
+                    "displayName": "Sandbox IPS",
+                    "description": "Investment, products, and services",
+                    "type": "SANDBOX",
+                    "owners": [
+                      {
+                        "name": "Joe Sakic",
+                        "type": "INDIVIDUAL",
+                        "lanId": "sak0091",
+                        "domainRole": "testDomain"
+                      },
+                      {
+                        "name": "Sarah Connor",
+                        "type": "INDIVIDUAL",
+                        "lanId": "con1997",
+                        "domainRole": "testDomain"
+                      }
+                    ],
+                    "accessGroups": [
+                      "WG-T-800",
+                      "WG-T-1000"
+                    ],
+                    "dataProducers": [
+                      "WG-RESISTANCE"
+                    ],
+                    "tags": "INTERNAL,SANDBOX,SKYNET"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/domain"
+                },
+                "example": {
+                  "domain": "ips",
+                  "displayName": "Enterprise IPS",
+                  "type": "ENTERPRISE",
+                  "createdAt": "2021-04-13T15:21:18.187Z",
+                  "updatedAt": "2021-04-13T15:21:18.187Z",
+                  "description": "Investment, products, and services",
+                  "owners": [
+                    {
+                      "name": "Joe Sakic",
+                      "type": "INDIVIDUAL",
+                      "lanId": "sak0091",
+                      "domainRole": "testDomain"
+                    },
+                    {
+                      "name": "Sarah Connor",
+                      "type": "INDIVIDUAL",
+                      "lanId": "con1997",
+                      "domainRole": "testDomain"
+                    }
+                  ],
+                  "accessGroups": [
+                    "WG-T-800",
+                    "WG-T-1000"
+                  ],
+                  "dataProducers": [
+                    "RESISTANCE"
+                  ],
+                  "tags": "INTERNAL,SKYNET"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Retrieve a domain",
+        "description": "Returns a domain.",
+        "tags": [
+          "Domains"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/domain"
+                },
+                "examples": {
+                  "The Domain Exists": {
+                    "value": {
+                      "domain": "ips",
+                      "displayName": "Enterprise IPS",
+                      "type": "ENTERPRISE",
+                      "createdAt": "2021-04-13T15:21:18.187Z",
+                      "updatedAt": "2021-04-13T15:21:18.187Z",
+                      "description": "Investment, products, and services",
+                      "owners": [
+                        {
+                          "name": "Joe Sakic",
+                          "type": "INDIVIDUAL",
+                          "lanId": "sak0091",
+                          "domainRole": "testDomain"
+                        },
+                        {
+                          "name": "Sarah Connor",
+                          "type": "INDIVIDUAL",
+                          "lanId": "con1997",
+                          "domainRole": "testDomain"
+                        }
+                      ],
+                      "accessGroups": [
+                        "WG-T-800",
+                        "WG-T-1000"
+                      ],
+                      "dataProducers": [
+                        "RESISTANCE"
+                      ],
+                      "tags": "INTERNAL,SKYNET"
+                    }
+                  },
+                  "No Matching Domain Exists": {
+                    "value": {}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/domain/domains": {
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          }
+        ],
+        "summary": "List all domains",
+        "description": "Returns a list of domains.",
+        "tags": [
+          "Domains"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/domains"
+                },
+                "examples": {
+                  "The Domains Exist": {
+                    "$ref": "#/components/schemas/domains/example/domains"
+                  },
+                  "No Matching Domains Exist": {
+                    "$ref": "#/components/schemas/domains/example/empty"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/domain/domains/{domain}/endpoints": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/domain"
+        }
+      ],
+      "get": {
+        "summary": "List all endpoints",
+        "description": "**Unsupported Operation in June 2021 Release.**\n\n Gets a list of all endpoints for a domain",
+        "tags": [
+          "Domains"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/endpoints"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/source/domains/{domain}/sources/{source}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/domain"
+        },
+        {
+          "$ref": "#/components/parameters/source"
+        }
+      ],
+      "put": {
+        "summary": "Register/Update a source",
+        "description": "Registers/updates a new source within a domain. A source is the physical location of a product such as a table in DB2, or topic in Kafka. A source enables the grouping of physical products to their physical source. Sources must contain only letters (`a-z`, `A-Z`). A source is case-insensitive with a maximum length of `1024` characters. The domain MUST exist prior to registering a source. A source is unique within a domain, but not across domains.",
+        "tags": [
+          "Sources"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/newSource"
+              },
+              "examples": {
+                "DB2": {
+                  "value": {
+                    "displayName": "Cyberdyne DB2",
+                    "type": "DB2",
+                    "connectionUrl": "jdbc:db2://somedataserver.nml.com/cyberdyne",
+                    "description": "Used to house Cyberdyne employee records.",
+                    "tags": "DB2,CYBERDYNE"
+                  }
+                },
+                "NETEZZA": {
+                  "value": {
+                    "displayName": "Client Salaries",
+                    "type": "NETEZZA,",
+                    "connectionUrl": "jdbc:netezza://host:port/database",
+                    "description": "Used to house client salaries",
+                    "tags": "NETEZZA"
+                  }
+                },
+                "FILE": {
+                  "value": {
+                    "displayName": "Client Annual Income",
+                    "type": "FILE,",
+                    "connectionUrl": "s3://udp-datalake-dev/CLIENT/silver/BIIPODT1/biipods.clt_annual_income_range_val/",
+                    "description": "Used to house client data",
+                    "tags": "FILE"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/source"
+                },
+                "example": {
+                  "domain": "ips",
+                  "name": "cybdyndt",
+                  "displayName": "Cyberdyne Employee Records",
+                  "type": "DB2",
+                  "createdAt": "2021-04-13T15:21:18.187Z",
+                  "updatedAt": "2021-04-13T15:21:18.187Z",
+                  "connectionUrl": "jdbc:db2://somedataserver.nml.com/cyberdyne",
+                  "description": "Used to house Cyberdyne employee records.",
+                  "tags": "DB2,CYBERDYNE"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Retrieve a source",
+        "description": "Returns a source.",
+        "tags": [
+          "Sources"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/source"
+                },
+                "examples": {
+                  "The Source Exists": {
+                    "value": {
+                      "domain": "ips",
+                      "name": "cybdyndt",
+                      "displayName": "Cyberdyne Employee Records",
+                      "type": "DB2",
+                      "createdAt": "2021-04-13T15:21:18.187Z",
+                      "updatedAt": "2021-04-13T15:21:18.187Z",
+                      "connectionUrl": "jdbc:db2://somedataserver.nml.com/cyberdyne",
+                      "description": "Used to house Cyberdyne employee records.",
+                      "tags": "DB2,CYBERDYNE"
+                    }
+                  },
+                  "No Matching Source Exists": {
+                    "value": {}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/source/domains/{domain}/sources": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/domain"
+        }
+      ],
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          }
+        ],
+        "summary": "List all sources",
+        "description": "Returns a list of sources.",
+        "tags": [
+          "Sources"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/sources"
+                },
+                "examples": {
+                  "The Sources Exist": {
+                    "value": [
+                      {
+                        "domain": "ips",
+                        "name": "cyberdynedb",
+                        "displayName": "Cyberdyne DB2",
+                        "type": "DB2",
+                        "connectionUrl": "jdbc:db2://somedataserver.nml.com/cyberdyne",
+                        "description": "Used to house Cyberdyne employee records",
+                        "createdAt": "2021-04-13T15:21:18.187Z",
+                        "updatedAt": "2021-04-13T15:21:18.187Z",
+                        "tags": "DB2,CYBERDYNE"
+                      },
+                      {
+                        "domain": "ips",
+                        "name": "salariesnetezza",
+                        "displayName": "Client Salaries",
+                        "type": "NETEZZA",
+                        "connectionUrl": "jdbc:netezza://host:port/database",
+                        "createdAt": "2021-04-13T15:21:18.187Z",
+                        "updatedAt": "2021-04-13T15:21:18.187Z",
+                        "description": "Used to house client salaries",
+                        "tags": "NETEZZA"
+                      },
+                      {
+                        "domain": "ips",
+                        "displayName": "Client Annual Income",
+                        "name": "filename",
+                        "type": "FILE",
+                        "connectionUrl": "s3://udp-datalake-dev/CLIENT/silver/BIIPODT1/biipods.clt_annual_income_range_val/",
+                        "createdAt": "2021-04-13T15:21:18.187Z",
+                        "updatedAt": "2021-04-13T15:21:18.187Z",
+                        "description": "Used to house client data",
+                        "tags": "FILE"
+                      }
+                    ]
+                  },
+                  "No Matching Sources Exist": {
+                    "value": []
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/dataset/domains/{domain}/sources/{source}/datasets/{dataset}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/domain"
+        },
+        {
+          "$ref": "#/components/parameters/source"
+        },
+        {
+          "$ref": "#/components/parameters/dataset"
+        }
+      ],
+      "put": {
+        "summary": "Register/Update a dataset",
+        "description": "Registers/updates a new dataset within a domain and source. Datasets must contain only letters (`a-z`, `A-Z`), numbers (`0-9`), underscores (`_`) or hyphens (`-`). A dataset is case-insensitive with a maximum length of `1024` characters. The domain and source MUST exist prior to registering a dataset. A dataset is unique within a domain and source, but not across domains and sources.",
+        "tags": [
+          "Datasets"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/newDataset"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/dataset"
+                },
+                "example": {
+                  "$ref": "#/components/schemas/dataset/example/dataset"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Retrieve a dataset",
+        "description": "Returns a dataset.",
+        "tags": [
+          "Datasets"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/dataset"
+                },
+                "examples": {
+                  "The Dataset Exists": {
+                    "$ref": "#/components/schemas/dataset/example/dataset"
+                  },
+                  "No Matching Dataset Exists": {
+                    "$ref": "#/components/schemas/dataset/example/empty"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/dataset/domains/{domain}/datasets": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/domain"
+        }
+      ],
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          }
+        ],
+        "summary": "List all datasets for a domain",
+        "description": "Returns a list of datasets under a specific domain.",
+        "tags": [
+          "Datasets"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/datasets"
+                },
+                "examples": {
+                  "The Datasets Exist": {
+                    "$ref": "#/components/schemas/datasets/example/datasets"
+                  },
+                  "No Matching Datasets Exist": {
+                    "$ref": "#/components/schemas/datasets/example/empty"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/dataset/domains/{domain}/sources/{source}/datasets": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/domain"
+        },
+        {
+          "$ref": "#/components/parameters/source"
+        }
+      ],
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/offset"
+          }
+        ],
+        "summary": "List all datasets for a domain and source",
+        "description": "Returns a list of datasets under a specific domain and source.",
+        "tags": [
+          "Datasets"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/datasets"
+                },
+                "examples": {
+                  "The Datasets Exist": {
+                    "$ref": "#/components/schemas/datasets/example/datasets"
+                  },
+                  "No Matching Datasets Exist": {
+                    "$ref": "#/components/schemas/datasets/example/empty"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/dataset/domains/{domain}/sources/{source}/datasets/{dataset}/tags/{tag}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/domain"
+        },
+        {
+          "$ref": "#/components/parameters/source"
+        },
+        {
+          "$ref": "#/components/parameters/dataset"
+        },
+        {
+          "$ref": "#/components/parameters/tag"
+        }
+      ],
+      "post": {
+        "summary": "Tag a dataset",
+        "description": "Tag an existing dataset.",
+        "tags": [
+          "Datasets"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/dataset"
+                },
+                "example": {
+                  "$ref": "#/components/schemas/dataset/example/dataset"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/dataset/domains/{domain}/sources/{source}/datasets/{dataset}/fields/{field}/tags/{tag}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/domain"
+        },
+        {
+          "$ref": "#/components/parameters/source"
+        },
+        {
+          "$ref": "#/components/parameters/dataset"
+        },
+        {
+          "$ref": "#/components/parameters/field"
+        },
+        {
+          "$ref": "#/components/parameters/tag"
+        }
+      ],
+      "post": {
+        "summary": "Tag a field",
+        "description": "Tag an existing field of a dataset.",
+        "tags": [
+          "Datasets"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/dataset"
+                },
+                "example": {
+                  "$ref": "#/components/schemas/dataset/example/dataset"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/schema/domains/{domain}/schemas/{schema}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/domain"
+        },
+        {
+          "$ref": "#/components/parameters/schema"
+        }
+      ],
+      "put": {
+        "summary": "Create/update a schema.",
+        "description": "Create or update a schema within a domain. A schema is case-**sensitive** with a maximum length of `1024` characters. The domain MUST exist prior to creating a schema. A schema is unique within a domain, but not across domains.",
+        "tags": [
+          "Schema"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/newSchema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/schema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/product/domains/{domain}/products/{product}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/domain"
+        },
+        {
+          "$ref": "#/components/parameters/product"
+        }
+      ],
+      "put": {
+        "summary": "Create/Update a product",
+        "description": "Registers/updates a new product within a domain. A product is a combination of code and data. It may contain any form of data (e.g. structured, semi-structured, Graph, Document format, etc.) and will provide an interface (i.e. Control Port) which will used to interact with the core platform. Products must contain only letters (`a-z`, `A-Z`). A product is case-insensitive with a maximum length of `1024` characters. The domain MUST exist prior to registering a product. A product is unique within a domain, but not across domains.",
+        "tags": [
+          "Products"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/newProduct"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/product"
+                },
+                "example": {
+                  "domain": "ips",
+                  "name": "exampleproduct",
+                  "displayName": "My Example Product",
+                  "createdAt": "2019-08-24T14:15:22.000Z",
+                  "updatedAt": "2019-08-24T14:15:22.000Z",
+                  "description": "This is an example product.",
+                  "businessPurpose": "To show others how to create Data Contract V2 Products.",
+                  "owners": [
+                    {
+                      "name": "Joe Sakic",
+                      "lanId": "sak0091"
+                    }
+                  ],
+                  "domainDetails": {
+                    "dataRetention": 90,
+                    "dataQuality": [
+                      "DataQualityRule1",
+                      "DataQualityRule2"
+                    ]
+                  },
+                  "trusted": false,
+                  "dataRights": "This example product has no terms of service and can be used freely.",
+                  "dataRegulatory": false,
+                  "facets": [
+                    {
+                      "type": "INTERNAL",
+                      "sourceToSinkMap": {
+                        "source1": "sink1",
+                        "source2": "sink2"
+                      },
+                      "schema": "{\"type\":\"record\",\"name\":\"schema\",\"fields\":[{\"name\":\"field1\",\"type\":\"string\",\"default\":\"NONE\"},{\"name\":\"field2\",\"type\":{\"type\":\"record\",\"name\":\"nested_record\",\"fields\":[{\"name\":\"field2a\",\"type\":\"string\",\"default\":\"NONE\"},{\"name\":\"field2b\",\"type\":\"string\",\"default\":\"NONE\"}]},\"default\":{}}]}",
+                      "sla": {
+                        "latency": 100,
+                        "timePeriod": 100
+                      },
+                      "privacyRestrictions": {
+                        "FIELD_TYPES": [
+                          "field1",
+                          "field2"
+                        ],
+                        "COLUMNS": [
+                          "col1",
+                          "col2"
+                        ]
+                      },
+                      "relationships": "The schema has no relationships",
+                      "tags": "INTERNAL",
+                      "pipelines": [
+                        "pipeline1",
+                        "pipeline2"
+                      ],
+                      "dataScienceModel": {
+                        "modelName": "Example Model",
+                        "modelVersions": [
+                          {
+                            "versionId": 1,
+                            "modelSource": "DATABRICKS",
+                            "predictMethod": "predict",
+                            "outputOffset": 0,
+                            "pickle": {
+                              "packageManager": "pip",
+                              "picklingLibrary": "pickle",
+                              "file": "model.pickle"
+                            },
+                            "preprocessingPickle": {
+                              "packageManager": "pip",
+                              "picklingLibrary": "pickle",
+                              "file": "input_preprocessing.pickle"
+                            },
+                            "signature": {
+                              "input": "\"type\":\"inputSchema\",\"name\":\"input\",\"fields\":[{\"name\":\"inputField1\",\"type\":\"string\"},{\"name\":\"inputField2\",\"type\":\"string\"}]}",
+                              "output": "\"type\":\"outputSchema\",\"name\":\"output\",\"fields\":[{\"name\":\"outputField1\",\"type\":\"string\"},{\"name\":\"outputField2\",\"type\":\"string\"}]}"
+                            },
+                            "stage": "NONE",
+                            "createdAt": "2021-08-20T11:15:38.975Z",
+                            "updatedAt": "2021-08-20T12:06:35.790Z"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "tags": "INTERNAL"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Retrieve a product",
+        "description": "Returns a product.",
+        "tags": [
+          "Products"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/product"
+                },
+                "examples": {
+                  "The Product Exists": {
+                    "value": {
+                      "domain": "ips",
+                      "name": "exampleproduct",
+                      "displayName": "My Example Product",
+                      "createdAt": "2019-08-24T14:15:22.000Z",
+                      "updatedAt": "2019-08-24T14:15:22.000Z",
+                      "description": "This is an example product.",
+                      "businessPurpose": "To show others how to create Data Contract V2 Products.",
+                      "owners": [
+                        {
+                          "name": "Joe Sakic",
+                          "lanId": "sak0091"
+                        }
+                      ],
+                      "domainDetails": {
+                        "dataRetention": 90,
+                        "dataQuality": [
+                          "DataQualityRule1",
+                          "DataQualityRule2"
+                        ]
+                      },
+                      "trusted": false,
+                      "dataRights": "This example product has no terms of service and can be used freely.",
+                      "dataRegulatory": false,
+                      "facets": [
+                        {
+                          "type": "INTERNAL",
+                          "sourceToSinkMap": {
+                            "source1": "sink1",
+                            "source2": "sink2"
+                          },
+                          "schema": "{\"type\":\"record\",\"name\":\"schema\",\"fields\":[{\"name\":\"field1\",\"type\":\"string\",\"default\":\"NONE\"},{\"name\":\"field2\",\"type\":{\"type\":\"record\",\"name\":\"nested_record\",\"fields\":[{\"name\":\"field2a\",\"type\":\"string\",\"default\":\"NONE\"},{\"name\":\"field2b\",\"type\":\"string\",\"default\":\"NONE\"}]},\"default\":{}}]}",
+                          "sla": {
+                            "latency": 100,
+                            "timePeriod": 100
+                          },
+                          "privacyRestrictions": {
+                            "FIELD_TYPES": [
+                              "field1",
+                              "field2"
+                            ],
+                            "COLUMNS": [
+                              "col1",
+                              "col2"
+                            ]
+                          },
+                          "relationships": "The schema has no relationships",
+                          "tags": "INTERNAL",
+                          "pipelines": [
+                            "pipeline1",
+                            "pipeline2"
+                          ],
+                          "dataScienceModel": {
+                            "modelName": "Example Model",
+                            "modelVersions": [
+                              {
+                                "versionId": 1,
+                                "modelSource": "DATABRICKS",
+                                "predictMethod": "predict",
+                                "outputOffset": 0,
+                                "pickle": {
+                                  "packageManager": "pip",
+                                  "picklingLibrary": "pickle",
+                                  "file": "model.pickle"
+                                },
+                                "preprocessingPickle": {
+                                  "packageManager": "pip",
+                                  "picklingLibrary": "pickle",
+                                  "file": "input_preprocessing.pickle"
+                                },
+                                "signature": {
+                                  "input": "\"type\":\"inputSchema\",\"name\":\"input\",\"fields\":[{\"name\":\"inputField1\",\"type\":\"string\"},{\"name\":\"inputField2\",\"type\":\"string\"}]}",
+                                  "output": "\"type\":\"outputSchema\",\"name\":\"output\",\"fields\":[{\"name\":\"outputField1\",\"type\":\"string\"},{\"name\":\"outputField2\",\"type\":\"string\"}]}"
+                                },
+                                "stage": "NONE",
+                                "createdAt": "2021-08-20T11:15:38.975Z",
+                                "updatedAt": "2021-08-20T12:06:35.790Z"
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      "tags": "INTERNAL"
+                    }
+                  },
+                  "No Matching Product Exists": {
+                    "value": {}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "oAuthSample": [
+        "Domains",
+        "Sources",
+        "Datasets",
+        "Products",
+        "Schema"
+      ]
+    }
+  ],
+  "components": {
+    "parameters": {
+      "domain": {
+        "name": "domain",
+        "in": "path",
+        "description": "The name of the domain.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "maxLength": 1024,
+          "pattern": "[a-zA-Z]",
+          "example": "ips"
+        }
+      },
+      "schema": {
+        "name": "schema",
+        "in": "path",
+        "description": "The name of the schema.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "maxLength": 1024,
+          "pattern": "[\\s\\S]",
+          "example": "T-880-schema"
+        }
+      },
+      "source": {
+        "name": "source",
+        "in": "path",
+        "description": "The name of the source.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "maxLength": 1024,
+          "pattern": "[a-zA-Z]",
+          "example": "cybdyndt"
+        }
+      },
+      "dataset": {
+        "name": "dataset",
+        "in": "path",
+        "description": "The name of the dataset.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "maxLength": 1024,
+          "pattern": "[a-zA-Z0-9_-]",
+          "example": "teighthundreds"
+        }
+      },
+      "product": {
+        "name": "product",
+        "in": "path",
+        "description": "The name of the product. Note: the product's name must be unique across all other products and all sources.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "maxLength": 1024,
+          "pattern": "[a-zA-Z]",
+          "example": "gcr"
+        }
+      },
+      "tag": {
+        "name": "tag",
+        "in": "path",
+        "description": "The name of the tag.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "SENSITIVE"
+        }
+      },
+      "field": {
+        "name": "field",
+        "in": "path",
+        "description": "The name of the field.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "my_field"
+        }
+      },
+      "service": {
+        "name": "service",
+        "in": "path",
+        "description": "The name of the service.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "maxLength": 1024,
+          "pattern": "[a-zA-Z0-9_-]",
+          "example": "cyberdyne-jdbc-ingestion"
+        }
+      },
+      "limit": {
+        "name": "limit",
+        "in": "query",
+        "description": "The number of results to return from offset.",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "example": 25,
+          "default": 100
+        }
+      },
+      "offset": {
+        "name": "offset",
+        "in": "query",
+        "description": "The initial position from which to return results.",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "example": 25,
+          "default": 0
+        }
+      },
+      "zone": {
+        "name": "zone",
+        "in": "path",
+        "description": "The name of the zone.",
+        "required": true,
+        "schema": {
+          "enum": [
+            "RAW",
+            "BRONZE",
+            "SILVER",
+            "GOLD",
+            "SANDBOX"
+          ]
+        }
+      }
+    },
+    "schemas": {
+      "newNamespace": {
+        "type": "object",
+        "properties": {
+          "ownerName": {
+            "description": "The owner of the namespace.",
+            "type": "string"
+          },
+          "description": {
+            "description": "The description of the namespace.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "ownerName"
+        ],
+        "example": {
+          "ownerName": "me",
+          "description": "My first namespace!"
+        }
+      },
+      "namespace": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "The name of the namespace.",
+            "type": "string"
+          },
+          "createdAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the date/time the namespace was created.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the date/time the namespace was updated.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "ownerName": {
+            "description": "The owner of the namespace.",
+            "type": "string"
+          },
+          "description": {
+            "description": "The description of the namespace.",
+            "type": "string"
+          }
+        },
+        "example": {
+          "name": "my-namespace",
+          "createdAt": "2019-05-09T19:49:24.201Z",
+          "updatedAt": "2019-05-09T19:49:24.201Z",
+          "ownerName": "me",
+          "description": "My first namespace!"
+        }
+      },
+      "namespaces": {
+        "type": "object",
+        "properties": {
+          "namespaces": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/namespace"
+            }
+          }
+        }
+      },
+      "DB_TABLE": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "description": "The type of the dataset.",
+            "type": "string",
+            "enum": [
+              "DB_TABLE"
+            ]
+          },
+          "physicalName": {
+            "description": "The **physical** name of the table.",
+            "type": "string"
+          },
+          "sourceName": {
+            "description": "The name of the source associated with the table.",
+            "type": "string"
+          },
+          "fields": {
+            "description": "The fields of the table.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "description": "The name of the field.",
+                  "type": "string"
+                },
+                "type": {
+                  "$ref": "#/components/schemas/fieldType"
+                },
+                "tags": {
+                  "description": "List of tags.",
+                  "type": "string"
+                },
+                "description": {
+                  "description": "The description of the field.",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "type"
+              ]
+            }
+          },
+          "tags": {
+            "description": "List of tags.",
+            "type": "string"
+          },
+          "description": {
+            "description": "The description of the table.",
+            "type": "string"
+          },
+          "runId": {
+            "description": "The ID associated with the run modifying the table.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "physicalName",
+          "sourceName",
+          "fields"
+        ],
+        "example": {
+          "type": "DB_TABLE",
+          "physicalName": "public.mytable",
+          "sourceName": "my-source",
+          "fields": [
+            {
+              "name": "a",
+              "type": "INTEGER"
+            },
+            {
+              "name": "b",
+              "type": "TIMESTAMP"
+            },
+            {
+              "name": "c",
+              "type": "INTEGER"
+            },
+            {
+              "name": "d",
+              "type": "INTEGER"
+            }
+          ],
+          "description": "My first dataset!"
+        }
+      },
+      "STREAM": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "description": "The type of the dataset.",
+            "type": "string",
+            "enum": [
+              "STREAM"
+            ]
+          },
+          "physicalName": {
+            "description": "The **physical** name of the stream.",
+            "type": "string"
+          },
+          "sourceName": {
+            "description": "The name of the source associated with the stream.",
+            "type": "string"
+          },
+          "schemaLocation": {
+            "description": "The URL of the schema for the stream data.",
+            "type": "string"
+          },
+          "fields": {
+            "description": "The schema fields for the stream data.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "description": "The name of the field.",
+                  "type": "string"
+                },
+                "type": {
+                  "description": "The type of the field.",
+                  "type": "string"
+                },
+                "tags": {
+                  "description": "List of tags.",
+                  "type": "string"
+                },
+                "description": {
+                  "description": "The description of the field.",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "type"
+              ]
+            }
+          },
+          "tags": {
+            "description": "List of tags.",
+            "type": "string"
+          },
+          "description": {
+            "description": "The description of the stream.",
+            "type": "string"
+          },
+          "runId": {
+            "description": "The ID associated with the run modifying the stream.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "physicalName",
+          "sourceName",
+          "fields",
+          "schemaLocation"
+        ],
+        "example": {
+          "type": "STREAM",
+          "physicalName": "my-stream",
+          "sourceName": "my-stream-source",
+          "schemaLocation": "http://registry.example.com/schemas/ids/1",
+          "fields": [],
+          "description": "My first stream dataset!"
+        }
+      },
+      "datasetId": {
+        "type": "object",
+        "description": "The ID of the dataset.",
+        "properties": {
+          "namespace": {
+            "type": "string",
+            "description": "The namespace of the dataset."
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the dataset."
+          }
+        }
+      },
+      "newDataset": {
+        "type": "object",
+        "properties": {
+          "displayName": {
+            "description": "The display name of the dataset. This defaults to the dataset name if one isn't provided.",
+            "type": "string",
+            "nullable": true
+          },
+          "schemaLocation": {
+            "description": "The URL of the schema for the data.",
+            "type": "string",
+            "nullable": true
+          },
+          "fields": {
+            "description": "Annotate programmatic field metadata with user defined metadata (tags, etc).",
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "description": "The name of the field.",
+                  "type": "string"
+                },
+                "tags": {
+                  "description": "List of tags (comma-seperated) to apply to the field.",
+                  "type": "string",
+                  "nullable": true
+                },
+                "description": {
+                  "description": "The description of the field.",
+                  "type": "string",
+                  "nullable": true
+                }
+              },
+              "required": [
+                "name"
+              ]
+            }
+          },
+          "tags": {
+            "description": "List of tags (comma-separated) that will be applied to the dataset.",
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "description": "The description of the dataset.",
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "example": {
+          "displayName": "T-800 Models",
+          "schemaLocation": "http://registry.example.com/schemas/ids/1",
+          "fields": [
+            {
+              "name": "ModelId",
+              "tags": "IDENTIFIER,UNIQUE"
+            },
+            {
+              "name": "RobotSSN",
+              "tags": "SENSITIVE"
+            },
+            {
+              "name": "Field7",
+              "description": "This is a poorly named field and a description might help."
+            }
+          ],
+          "tags": "ROBOTS,TERMINATORS",
+          "description": "List of T-800 models manufacturer by Cyberdyne in the 1990s."
+        }
+      },
+      "dataset": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string",
+            "nullable": true,
+            "description": "The domain which the dataset exists under"
+          },
+          "source": {
+            "type": "string",
+            "nullable": true,
+            "description": "The source which the dataset exists under"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "description": "The name of the dataset."
+          },
+          "displayName": {
+            "description": "The display name of the dataset. This defaults to the dataset name if one isn't provided.",
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the date/time the dataset was created.",
+            "type": "string",
+            "nullable": true,
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the date/time the dataset was updated.",
+            "type": "string",
+            "nullable": true,
+            "format": "date-time"
+          },
+          "schemaLocation": {
+            "description": "The URL of the schema for the data.",
+            "type": "string",
+            "nullable": true
+          },
+          "fields": {
+            "description": "Annotate programmatic field metadata with user defined metadata (tags, etc).",
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "description": "The name of the field.",
+                  "type": "string",
+                  "nullable": true
+                },
+                "tags": {
+                  "description": "List of tags (comma-seperated) to apply to the field.",
+                  "type": "string",
+                  "nullable": true
+                },
+                "description": {
+                  "description": "The description of the field.",
+                  "type": "string",
+                  "nullable": true
+                }
+              },
+              "required": [
+                "name"
+              ]
+            }
+          },
+          "tags": {
+            "description": "List of tags (comma-separated) that will be applied to the dataset.",
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "description": "The description of the dataset.",
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "example": {
+          "dataset": {
+            "value": {
+              "domain": "domain",
+              "source": "source",
+              "name": "teighthundreds",
+              "displayName": "T-800 Models",
+              "createdAt": "2021-04-13T15:21:18.187Z",
+              "updatedAt": "2021-04-13T15:21:18.187Z",
+              "schemaLocation": "http://registry.example.com/schemas/ids/1",
+              "fields": [
+                {
+                  "name": "ModelId",
+                  "tags": "IDENTIFIER,UNIQUE"
+                },
+                {
+                  "name": "RobotSSN",
+                  "tags": "SENSITIVE"
+                },
+                {
+                  "name": "Field7",
+                  "description": "This is a poorly named field and a description might help."
+                }
+              ],
+              "tags": "ROBOTS,TERMINATORS",
+              "description": "List of T-800 models manufacturer by Cyberdyne in the 1990s."
+            }
+          },
+          "empty": {
+            "value": {}
+          }
+        }
+      },
+      "datasets": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/dataset"
+        },
+        "example": {
+          "datasets": {
+            "value": [
+              {
+                "domain": "domain",
+                "source": "source",
+                "name": "teighthundreds",
+                "displayName": "T-800 Models",
+                "createdAt": "2021-04-13T15:21:18.187Z",
+                "updatedAt": "2021-04-13T15:21:18.187Z",
+                "schemaLocation": "http://registry.example.com/schemas/ids/1",
+                "fields": [
+                  {
+                    "name": "ModelId",
+                    "tags": "IDENTIFIER,UNIQUE"
+                  },
+                  {
+                    "name": "RobotSSN",
+                    "tags": "SENSITIVE"
+                  },
+                  {
+                    "name": "Field7",
+                    "description": "This is a poorly named field and a description might help."
+                  }
+                ],
+                "tags": "ROBOTS,TERMINATORS",
+                "description": "List of T-800 models manufacturer by Cyberdyne in the 1990s."
+              }
+            ]
+          },
+          "empty": {
+            "value": []
+          }
+        }
+      },
+      "datasetVersionId": {
+        "type": "object",
+        "properties": {
+          "namespace": {
+            "type": "string",
+            "description": "The namespace of the dataset."
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the dataset."
+          },
+          "version": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The version of the dataset"
+          }
+        }
+      },
+      "datasetVersion": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/datasetVersionId"
+          },
+          "type": {
+            "description": "The type of the dataset.",
+            "type": "string"
+          },
+          "name": {
+            "description": "The **logical** name of the dataset.",
+            "type": "string"
+          },
+          "physicalName": {
+            "description": "The **physical** name of the dataset.",
+            "type": "string"
+          },
+          "createdAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the date/time the dataset was created.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "version": {
+            "description": "The ID of the dataset version.",
+            "type": "string"
+          },
+          "namespace": {
+            "type": "string",
+            "description": "The namespace of the dataset."
+          },
+          "sourceName": {
+            "description": "The name of the source associated with the dataset.",
+            "type": "string"
+          },
+          "fields": {
+            "description": "The fields of the dataset.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "description": "The name of the field.",
+                  "type": "string"
+                },
+                "type": {
+                  "$ref": "#/components/schemas/fieldType"
+                },
+                "tags": {
+                  "description": "List of tags.",
+                  "type": "string"
+                },
+                "description": {
+                  "description": "The description of the field.",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "tags": {
+            "description": "List of tags.",
+            "type": "string"
+          },
+          "description": {
+            "description": "The description of the dataset.",
+            "type": "string"
+          },
+          "createdByRun": {
+            "description": "The run associated with the dataset version.",
+            "type": "object",
+            "properties": {
+              "id": {
+                "description": "The ID of the run.",
+                "type": "string",
+                "format": "uuid"
+              },
+              "createdAt": {
+                "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the date/time the run was created.",
+                "type": "string",
+                "format": "date-time"
+              },
+              "updatedAt": {
+                "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the date/time the run was updated.",
+                "type": "string",
+                "format": "date-time"
+              },
+              "nominalStartTime": {
+                "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the nominal start time of the run.",
+                "type": "string",
+                "format": "date-time"
+              },
+              "nominalEndTime": {
+                "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the nominal end time of the run.",
+                "type": "string",
+                "format": "date-time"
+              },
+              "state": {
+                "description": "The current state of the run.",
+                "type": "string",
+                "enum": [
+                  "NEW",
+                  "RUNNING",
+                  "COMPLETED",
+                  "FAILED",
+                  "ABORTED"
+                ]
+              },
+              "startedAt": {
+                "type": "integer",
+                "description": "The time at which the run was started. Measured in seconds since the Unix epoch."
+              },
+              "endedAt": {
+                "type": "integer",
+                "description": "The time at which the run was ended. Measured in seconds since the Unix epoch."
+              },
+              "durationMs": {
+                "type": "integer",
+                "description": "The total duration of the run. Measured in milliseconds."
+              },
+              "args": {
+                "description": "The arguments of the run.",
+                "type": "object"
+              },
+              "jobVersion": {
+                "$ref": "#/components/schemas/jobVersionId"
+              },
+              "inputVersions": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/datasetVersionId"
+                }
+              },
+              "outputVersions": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/datasetVersionId"
+                }
+              }
+            }
+          }
+        },
+        "example": {
+          "id": {
+            "namespace": "my-namespace",
+            "name": "my-dataset"
+          },
+          "type": "DB_TABLE",
+          "name": "my-dataset",
+          "physicalName": "public.mytable",
+          "createdAt": "2019-05-09T19:49:24.201Z",
+          "version": "d224dac0-35d7-4d9b-bbbe-6fff1a8485ad",
+          "namespace": "my-namespace",
+          "sourceName": "my-source",
+          "fields": [
+            {
+              "name": "a",
+              "type": "INTEGER",
+              "tags": []
+            },
+            {
+              "name": "b",
+              "type": "TIMESTAMP",
+              "tags": []
+            },
+            {
+              "name": "c",
+              "type": "INTEGER",
+              "tags": []
+            },
+            {
+              "name": "d",
+              "type": "INTEGER",
+              "tags": []
+            }
+          ],
+          "tags": [],
+          "description": "My first dataset!",
+          "createdByRun": {
+            "id": "0e89b60a-d80d-42ae-a12b-bd79ae1fb576",
+            "createdAt": "2019-05-09T18:52:35.620763Z",
+            "updatedAt": "2019-05-09T18:53:41.461122Z",
+            "nominalStartTime": null,
+            "nominalEndTime": null,
+            "state": "COMPLETED",
+            "startedAt": "2021-02-05T18:53:33.245492Z",
+            "endedAt": "2021-02-05T18:53:41.461122Z",
+            "durationMs": 8216,
+            "args": {
+              "email": "me@example.com",
+              "emailOnFailure": false,
+              "emailOnRetry": true,
+              "retries": 1
+            },
+            "jobVersion": {
+              "namespace": "my-namespace",
+              "name": "my_processing_job",
+              "versionUuid": "0ba5b13b-350e-40f3-ba3f-cc00a4e92d11"
+            },
+            "inputVersions": [
+              {
+                "namespace": "my-namespace",
+                "name": "an_input_dataset",
+                "versionUuid": "d224dac0-35d7-4d9b-bbbe-6fff1a8485ad"
+              }
+            ],
+            "outputVersions": [
+              {
+                "namespace": "my-namespace",
+                "name": "my-dataset",
+                "versionUuid": "16e04029-2035-37f1-8206-d57be374333f"
+              }
+            ]
+          }
+        }
+      },
+      "datasetVersions": {
+        "type": "object",
+        "properties": {
+          "versions": {
+            "items": {
+              "$ref": "#/components/schemas/datasetVersion"
+            }
+          }
+        }
+      },
+      "newJob": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The ID of the job.",
+            "type": "object",
+            "properties": {
+              "namespace": {
+                "type": "string",
+                "description": "The namespace of the job."
+              },
+              "name": {
+                "type": "string",
+                "description": "The name of the job."
+              }
+            }
+          },
+          "type": {
+            "description": "The type of the job.",
+            "type": "string",
+            "enum": [
+              "BATCH",
+              "STREAM",
+              "SERVICE"
+            ]
+          },
+          "inputs": {
+            "description": "The set of **input** datasets.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/datasetId"
+            },
+            "uniqueItems": true
+          },
+          "outputs": {
+            "description": "The set of **output** datasets.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/datasetId"
+            },
+            "uniqueItems": true
+          },
+          "location": {
+            "description": "The URL of the job source code or artifact.",
+            "type": "string",
+            "format": "URL"
+          },
+          "context": {
+            "description": "A key/value pair that must be of type `string`. A context can be used for getting additional details about the job.",
+            "type": "object"
+          },
+          "description": {
+            "description": "The description of the job.",
+            "type": "string"
+          },
+          "runId": {
+            "description": "An _optional_ run ID used to associate a job version to an existing job run.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "inputs",
+          "outputs"
+        ],
+        "example": {
+          "type": "BATCH",
+          "inputs": [
+            {
+              "namespace": "my-namespace",
+              "name": "my-dataset"
+            }
+          ],
+          "outputs": [],
+          "location": "https://github.com/my-jobs/blob/124f6089ad4c5fcbb1d7b33cbb5d3a9521c5d32c",
+          "context": {
+            "SQL": "SELECT * FROM mytable;"
+          },
+          "description": "My first job!"
+        }
+      },
+      "JOB": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The ID of the job.",
+            "type": "object",
+            "properties": {
+              "namespace": {
+                "type": "string",
+                "description": "The namespace of the job."
+              },
+              "name": {
+                "type": "string",
+                "description": "The name of the job."
+              }
+            }
+          },
+          "type": {
+            "description": "The type of the job.",
+            "type": "string"
+          },
+          "name": {
+            "description": "The name of the job.",
+            "type": "string"
+          },
+          "createdAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the date/time the job was created.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the date/time the job was updated.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "namespace": {
+            "description": "The namespace of the job.",
+            "type": "string"
+          },
+          "inputs": {
+            "description": "The set of **input** datasets.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/datasetId"
+            },
+            "uniqueItems": true
+          },
+          "outputs": {
+            "description": "The set of **output** datasets.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/datasetId"
+            },
+            "uniqueItems": true
+          },
+          "location": {
+            "description": "The URL of the job source code or artifact.",
+            "type": "string",
+            "format": "URL"
+          },
+          "context": {
+            "description": "Deprecated- Use facet. A key/value pair that must be of type `string`. A context can be used for getting additional details about the job.",
+            "type": "object",
+            "deprecated": true
+          },
+          "description": {
+            "description": "The description of the job.",
+            "type": "string"
+          },
+          "latestRun": {
+            "description": "The latest run of the job.",
+            "type": "object",
+            "properties": {
+              "id": {
+                "description": "The ID of the run.",
+                "type": "string",
+                "format": "uuid"
+              },
+              "createdAt": {
+                "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the date/time the run was created.",
+                "type": "string",
+                "format": "date-time"
+              },
+              "updatedAt": {
+                "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the date/time the run was updated.",
+                "type": "string",
+                "format": "date-time"
+              },
+              "nominalStartTime": {
+                "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the nominal start time of the run.",
+                "type": "string",
+                "format": "date-time"
+              },
+              "nominalEndTime": {
+                "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the nominal end time of the run.",
+                "type": "string",
+                "format": "date-time"
+              },
+              "state": {
+                "description": "The current state of the run.",
+                "type": "string",
+                "enum": [
+                  "NEW",
+                  "RUNNING",
+                  "COMPLETED",
+                  "FAILED",
+                  "ABORTED"
+                ]
+              },
+              "startedAt": {
+                "type": "integer",
+                "description": "The time at which the run was started. Measured in seconds since the Unix epoch."
+              },
+              "endedAt": {
+                "type": "integer",
+                "description": "The time at which the run was ended. Measured in seconds since the Unix epoch."
+              },
+              "durationMs": {
+                "type": "integer",
+                "description": "The total duration of the run. Measured in milliseconds."
+              },
+              "args": {
+                "description": "The arguments of the run.",
+                "type": "object"
+              },
+              "jobVersion": {
+                "$ref": "#/components/schemas/jobVersionId"
+              },
+              "inputVersions": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/datasetVersionId"
+                }
+              },
+              "outputVersions": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/datasetVersionId"
+                }
+              },
+              "facets": {
+                "$ref": "#/components/schemas/runFacets"
+              }
+            }
+          },
+          "facets": {
+            "$ref": "#/components/schemas/jobFacets"
+          }
+        },
+        "example": {
+          "id": {
+            "namespace": "my-namespace",
+            "name": "my-job"
+          },
+          "type": "BATCH",
+          "name": "my-job",
+          "createdAt": "2019-05-09T19:49:24.201Z",
+          "updatedAt": "2019-05-09T19:49:24.201Z",
+          "namespace": "my-namespace",
+          "inputs": [
+            {
+              "namespace": "my-namespace",
+              "name": "my-dataset"
+            }
+          ],
+          "outputs": [],
+          "location": "https://github.com/my-jobs/blob/124f6089ad4c5fcbb1d7b33cbb5d3a9521c5d32c",
+          "context": {
+            "SQL": "SELECT * FROM mytable;"
+          },
+          "description": "My first job!",
+          "latestRun": null,
+          "facets": {
+            "context": {
+              "_producer": "https://github.com/OpenLineage/OpenLineage/blob/v1-0-0/client",
+              "_schemaURL": "https://github.com/OpenLineage/OpenLineage/blob/v1-0-0/spec/OpenLineage.yml#MyCustomJobFacet"
+            }
+          }
+        }
+      },
+      "jobVersionList": {
+        "type": "object",
+        "properties": {
+          "versions": {
+            "items": {
+              "$ref": "#/components/schemas/jobVersion"
+            }
+          }
+        }
+      },
+      "jobVersionId": {
+        "type": "object",
+        "properties": {
+          "namespace": {
+            "type": "string",
+            "description": "The namespace of the job."
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the job."
+          },
+          "versionUuid": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The version of the job"
+          }
+        }
+      },
+      "jobVersion": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The ID of the job.",
+            "type": "object",
+            "properties": {
+              "namespace": {
+                "type": "string",
+                "description": "The namespace of the job."
+              },
+              "name": {
+                "type": "string",
+                "description": "The name of the job."
+              },
+              "version": {
+                "type": "string",
+                "description": "The version of the job"
+              }
+            }
+          },
+          "name": {
+            "description": "The name of the job.",
+            "type": "string"
+          },
+          "version": {
+            "description": "The version of the job",
+            "type": "string"
+          },
+          "createdAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the date/time the job version was created.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "namespace": {
+            "description": "The namespace of the job.",
+            "type": "string"
+          },
+          "inputs": {
+            "description": "The set of **input** datasets",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/datasetId"
+            },
+            "uniqueItems": true
+          },
+          "outputs": {
+            "description": "The set of **output** datasets",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/datasetId"
+            },
+            "uniqueItems": true
+          },
+          "location": {
+            "description": "The URL of the job source code or artifact for the given job version.",
+            "type": "string",
+            "format": "URL"
+          },
+          "context": {
+            "description": "Deprecated- Use facet. A key/value pair that must be of type `string`. A context can be used for getting additional details about the job.",
+            "type": "object",
+            "deprecated": true
+          },
+          "latestRun": {
+            "description": "The latest run associated with the job version.",
+            "type": "object",
+            "properties": {
+              "id": {
+                "description": "The ID of the run.",
+                "type": "string",
+                "format": "uuid"
+              },
+              "createdAt": {
+                "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the date/time the run was created.",
+                "type": "string",
+                "format": "date-time"
+              },
+              "updatedAt": {
+                "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the date/time the run was updated.",
+                "type": "string",
+                "format": "date-time"
+              },
+              "nominalStartTime": {
+                "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the nominal start time of the run.",
+                "type": "string",
+                "format": "date-time"
+              },
+              "nominalEndTime": {
+                "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the nominal end time of the run.",
+                "type": "string",
+                "format": "date-time"
+              },
+              "state": {
+                "description": "The current state of the run.",
+                "type": "string",
+                "enum": [
+                  "NEW",
+                  "RUNNING",
+                  "COMPLETED",
+                  "FAILED",
+                  "ABORTED"
+                ]
+              },
+              "startedAt": {
+                "type": "integer",
+                "description": "The time at which the run was started. Measured in seconds since the Unix epoch."
+              },
+              "endedAt": {
+                "type": "integer",
+                "description": "The time at which the run was ended. Measured in seconds since the Unix epoch."
+              },
+              "durationMs": {
+                "type": "integer",
+                "description": "The total duration of the run. Measured in milliseconds."
+              },
+              "args": {
+                "description": "The arguments of the run.",
+                "type": "object"
+              },
+              "jobVersion": {
+                "$ref": "#/components/schemas/jobVersionId"
+              },
+              "inputVersions": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/datasetVersionId"
+                }
+              },
+              "outputVersions": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/datasetVersionId"
+                }
+              }
+            }
+          },
+          "facets": {
+            "$ref": "#/components/schemas/jobFacets"
+          }
+        },
+        "example": {
+          "id": {
+            "namespace": "my-namespace",
+            "name": "my-job",
+            "version": "56472c57-a2ef-4218-b7b7-d2af02a343fd"
+          },
+          "type": "BATCH",
+          "name": "my-job",
+          "version": "56472c57-a2ef-4218-b7b7-d2af02a343fd",
+          "createdAt": "2019-05-09T19:49:24.201Z",
+          "namespace": "my-namespace",
+          "inputs": [
+            {
+              "namespace": "my-namespace",
+              "name": "my-dataset"
+            }
+          ],
+          "outputs": [],
+          "location": "https://github.com/my-jobs/blob/124f6089ad4c5fcbb1d7b33cbb5d3a9521c5d32c",
+          "context": {
+            "SQL": "SELECT * FROM mytable;"
+          },
+          "description": "My first job!",
+          "facets": {
+            "context": {
+              "_producer": "https://github.com/OpenLineage/OpenLineage/blob/v1-0-0/client",
+              "_schemaURL": "https://github.com/OpenLineage/OpenLineage/blob/v1-0-0/spec/OpenLineage.yml#MyCustomJobFacet"
+            }
+          }
+        }
+      },
+      "jobs": {
+        "type": "object",
+        "properties": {
+          "jobs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/JOB"
+            }
+          }
+        }
+      },
+      "newRun": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "An _optional_ user-provided unique ID of the run. A run ID **must** be an [UUID](https://tools.ietf.org/html/rfc4122). If an ID for the run is not provided, a random UUID will be generated for the given run.",
+            "type": "string",
+            "format": "uuid"
+          },
+          "nominalStartTime": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the nominal start time of the run.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "nominalEndTime": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the nominal end time of the run.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "args": {
+            "description": "The arguments of the run.",
+            "type": "object"
+          }
+        },
+        "example": {
+          "args": {
+            "email": "me@example.com",
+            "emailOnFailure": false,
+            "emailOnRetry": true,
+            "retries": 1
+          }
+        }
+      },
+      "runAsNew": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The ID of the run.",
+            "type": "string",
+            "format": "uuid"
+          },
+          "createdAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the date/time the run was created.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the date/time the run was updated.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "nominalStartTime": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the nominal start time of the run.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "nominalEndTime": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the nominal end time of the run.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "state": {
+            "description": "The current state of the run.",
+            "type": "string",
+            "enum": [
+              "NEW",
+              "RUNNING",
+              "COMPLETED",
+              "FAILED",
+              "ABORTED"
+            ]
+          },
+          "startedAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the start time of the run.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "endedAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the end time of the run.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "durationMs": {
+            "type": "integer",
+            "description": "The total duration of the run. Measured in milliseconds."
+          },
+          "args": {
+            "description": "The arguments of the run.",
+            "type": "object"
+          },
+          "jobVersion": {
+            "$ref": "#/components/schemas/jobVersionId"
+          },
+          "inputVersions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/datasetVersionId"
+            }
+          },
+          "outputVersions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/datasetVersionId"
+            }
+          },
+          "facets": {
+            "$ref": "#/components/schemas/runFacets"
+          }
+        },
+        "example": {
+          "id": "870492da-ecfb-4be0-91b9-9a89ddd3db90",
+          "createdAt": "2019-05-09T19:49:24.201Z",
+          "updatedAt": "2019-05-09T19:49:24.201Z",
+          "nominalStartTime": null,
+          "nominalEndTime": null,
+          "state": "NEW",
+          "startedAt": null,
+          "endedAt": null,
+          "durationMs": null,
+          "args": {
+            "email": "me@example.com",
+            "emailOnFailure": "false",
+            "emailOnRetry": "true",
+            "retries": "1"
+          },
+          "facets": {
+            "context": {
+              "_producer": "https://github.com/OpenLineage/OpenLineage/blob/v1-0-0/client",
+              "_schemaURL": "https://github.com/OpenLineage/OpenLineage/blob/v1-0-0/spec/OpenLineage.yml#MyCustomJobFacet"
+            }
+          }
+        }
+      },
+      "runAsRunning": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The ID of the run.",
+            "type": "string",
+            "format": "uuid"
+          },
+          "createdAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the date/time the run was created.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the date/time the run was updated.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "nominalStartTime": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the nominal start time of the run.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "nominalEndTime": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the nominal end time of the run.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "state": {
+            "description": "The current state of the run.",
+            "type": "string",
+            "enum": [
+              "NEW",
+              "RUNNING",
+              "COMPLETED",
+              "FAILED",
+              "ABORTED"
+            ]
+          },
+          "startedAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the start time of the run.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "endedAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the end time of the run.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "durationMs": {
+            "type": "integer",
+            "description": "The total duration of the run. Measured in milliseconds."
+          },
+          "args": {
+            "description": "The arguments of the run.",
+            "type": "object"
+          },
+          "facets": {
+            "$ref": "#/components/schemas/runFacets"
+          }
+        },
+        "example": {
+          "id": "870492da-ecfb-4be0-91b9-9a89ddd3db90",
+          "createdAt": "2019-05-09T19:49:24.201Z",
+          "updatedAt": "2019-05-09T19:49:24.201Z",
+          "nominalStartTime": null,
+          "nominalEndTime": null,
+          "state": "RUNNING",
+          "startedAt": "2019-05-09T15:17:32.690Z",
+          "endedAt": null,
+          "durationMs": null,
+          "args": {
+            "email": "me@example.com",
+            "emailOnFailure": "false",
+            "emailOnRetry": "true",
+            "retries": "1"
+          },
+          "facets": {
+            "context": {
+              "_producer": "https://github.com/OpenLineage/OpenLineage/blob/v1-0-0/client",
+              "_schemaURL": "https://github.com/OpenLineage/OpenLineage/blob/v1-0-0/spec/OpenLineage.yml#MyCustomJobFacet"
+            }
+          }
+        }
+      },
+      "runAsCompleted": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The ID of the run.",
+            "type": "string",
+            "format": "uuid"
+          },
+          "createdAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the date/time the run was created.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the date/time the run was updated.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "nominalStartTime": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the nominal start time of the run.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "nominalEndTime": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the nominal end time of the run.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "state": {
+            "description": "The current state of the run.",
+            "type": "string",
+            "enum": [
+              "NEW",
+              "RUNNING",
+              "COMPLETED",
+              "FAILED",
+              "ABORTED"
+            ]
+          },
+          "startedAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the start time of the run.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "endedAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the end time of the run.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "durationMs": {
+            "type": "integer",
+            "description": "The total duration of the run. Measured in milliseconds."
+          },
+          "args": {
+            "description": "The arguments of the run.",
+            "type": "object"
+          },
+          "jobVersion": {
+            "$ref": "#/components/schemas/jobVersionId"
+          },
+          "inputVersions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/datasetVersionId"
+            }
+          },
+          "outputVersions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/datasetVersionId"
+            }
+          },
+          "facets": {
+            "$ref": "#/components/schemas/runFacets"
+          }
+        },
+        "example": {
+          "id": "870492da-ecfb-4be0-91b9-9a89ddd3db90",
+          "createdAt": "2019-05-09T19:49:24.201Z",
+          "updatedAt": "2019-05-09T19:49:24.201Z",
+          "nominalStartTime": null,
+          "nominalEndTime": null,
+          "state": "COMPLETED",
+          "startedAt": "2019-05-09T15:17:32.690Z",
+          "endedAt": "2019-05-09T20:05:46.815Z",
+          "durationMs": 4250894125,
+          "args": {
+            "email": "me@example.com",
+            "emailOnFailure": "false",
+            "emailOnRetry": "true",
+            "retries": "1"
+          },
+          "facets": {
+            "context": {
+              "_producer": "https://github.com/OpenLineage/OpenLineage/blob/v1-0-0/client",
+              "_schemaURL": "https://github.com/OpenLineage/OpenLineage/blob/v1-0-0/spec/OpenLineage.yml#MyCustomJobFacet"
+            }
+          }
+        }
+      },
+      "runAsFailed": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The ID of the run.",
+            "type": "string",
+            "format": "uuid"
+          },
+          "createdAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the date/time the run was created.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the date/time the run was updated.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "nominalStartTime": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the nominal start time of the run.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "nominalEndTime": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the nominal end time of the run.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "state": {
+            "description": "The current state of the run.",
+            "type": "string",
+            "enum": [
+              "NEW",
+              "RUNNING",
+              "COMPLETED",
+              "FAILED",
+              "ABORTED"
+            ]
+          },
+          "startedAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the start time of the run.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "endedAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the end time of the run.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "durationMs": {
+            "type": "integer",
+            "description": "The total duration of the run. Measured in milliseconds."
+          },
+          "args": {
+            "description": "The arguments of the run.",
+            "type": "object"
+          },
+          "facets": {
+            "$ref": "#/components/schemas/runFacets"
+          }
+        },
+        "example": {
+          "id": "870492da-ecfb-4be0-91b9-9a89ddd3db90",
+          "createdAt": "2019-05-09T19:49:24.201Z",
+          "updatedAt": "2019-05-09T19:49:24.201Z",
+          "nominalStartTime": null,
+          "nominalEndTime": null,
+          "state": "FAILED",
+          "startedAt": "2019-05-09T15:17:32.690Z",
+          "endedAt": "2019-05-09T20:05:46.815Z",
+          "durationMs": 4250894125,
+          "args": {
+            "email": "me@example.com",
+            "emailOnFailure": "false",
+            "emailOnRetry": "true",
+            "retries": "1"
+          },
+          "facets": {
+            "context": {
+              "_producer": "https://github.com/OpenLineage/OpenLineage/blob/v1-0-0/client",
+              "_schemaURL": "https://github.com/OpenLineage/OpenLineage/blob/v1-0-0/spec/OpenLineage.yml#MyCustomJobFacet"
+            }
+          }
+        }
+      },
+      "runAsAborted": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The ID of the run.",
+            "type": "string",
+            "format": "uuid"
+          },
+          "createdAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the date/time the run was created.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the date/time the run was updated.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "nominalStartTime": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the nominal start time of the run.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "nominalEndTime": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the nominal end time of the run.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "state": {
+            "description": "The current state of the run.",
+            "type": "string",
+            "enum": [
+              "NEW",
+              "RUNNING",
+              "COMPLETED",
+              "FAILED",
+              "ABORTED"
+            ]
+          },
+          "startedAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the start time of the run.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "endedAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the end time of the run.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "durationMs": {
+            "type": "integer",
+            "description": "The total duration of the run. Measured in milliseconds."
+          },
+          "args": {
+            "description": "The arguments of the run.",
+            "type": "object"
+          },
+          "facets": {
+            "$ref": "#/components/schemas/runFacets"
+          }
+        },
+        "example": {
+          "id": "870492da-ecfb-4be0-91b9-9a89ddd3db90",
+          "createdAt": "2019-05-09T19:49:24.201Z",
+          "updatedAt": "2019-05-09T19:49:24.201Z",
+          "nominalStartTime": null,
+          "nominalEndTime": null,
+          "state": "ABORTED",
+          "startedAt": "2019-05-09T15:17:32.690Z",
+          "endedAt": "2019-05-09T20:05:46.815Z",
+          "durationMs": 4250894125,
+          "args": {
+            "email": "me@example.com",
+            "emailOnFailure": "false",
+            "emailOnRetry": "true",
+            "retries": "1"
+          },
+          "facets": {
+            "context": {
+              "_producer": "https://github.com/OpenLineage/OpenLineage/blob/v1-0-0/client",
+              "_schemaURL": "https://github.com/OpenLineage/OpenLineage/blob/v1-0-0/spec/OpenLineage.yml#MyCustomJobFacet"
+            }
+          }
+        }
+      },
+      "runs": {
+        "type": "object",
+        "properties": {
+          "runs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/runAsCompleted"
+            }
+          }
+        }
+      },
+      "datasetFacets": {
+        "description": "The facets of the dataset. For a full list of standard dataset facets, see [OpenLineage](https://github.com/OpenLineage/OpenLineage/blob/main/spec/OpenLineage.md#standard-facets).",
+        "type": "object",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/customFacet"
+        }
+      },
+      "jobFacets": {
+        "description": "The facets of the job. For a full list of standard job facets, see [OpenLineage](https://github.com/OpenLineage/OpenLineage/blob/main/spec/OpenLineage.md#standard-facets).",
+        "type": "object",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/customFacet"
+        }
+      },
+      "runFacets": {
+        "description": "The facets of the run. For a full list of standard run facets, see [OpenLineage](https://github.com/OpenLineage/OpenLineage/blob/main/spec/OpenLineage.md#standard-facets).",
+        "type": "object",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/customFacet"
+        }
+      },
+      "customFacet": {
+        "description": "A custom facet enables the extension of _dataset_, _job_, and _run_ metadata. A custom facet **must** also have a schema, where a version of the schema is identifiable via a URL. A field within the schema **must** not start with an underscore (`_`).",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/baseFacet"
+          },
+          {
+            "type": "object",
+            "additionalProperties": true
+          }
+        ]
+      },
+      "baseFacet": {
+        "description": "All base facet fields are prefixed with an underscore (`_`) to avoid field naming conflicts defined with other facets.",
+        "type": "object",
+        "properties": {
+          "_producer": {
+            "description": "URI identifying the producer of this metadata. For example this could be a git url with a given tag or sha",
+            "type": "string",
+            "format": "uri",
+            "example": "https://github.com/OpenLineage/OpenLineage/blob/v1-0-0/client"
+          },
+          "_schemaURL": {
+            "description": "The URL to the corresponding version of the schema definition following a $ref URL Reference (see https://swagger.io/docs/specification/using-ref/)",
+            "type": "string",
+            "format": "uri",
+            "example": "https://github.com/OpenLineage/OpenLineage/blob/v1-0-0/spec/OpenLineage.yml#MyCustomJobFacet"
+          }
+        },
+        "required": [
+          "_producer",
+          "_schemaURL"
+        ]
+      },
+      "fieldType": {
+        "description": "The type of the field.",
+        "type": "string",
+        "enum": [
+          "ARRAY",
+          "BIGINT",
+          "BINARY",
+          "BOOL",
+          "BOOLEAN",
+          "BPCHAR",
+          "CHAR",
+          "CHARACTER",
+          "DATE",
+          "DATETIME",
+          "DECIMAL",
+          "DOUBLE",
+          "FLOAT",
+          "FLOAT4",
+          "FLOAT8",
+          "GEOMETRY",
+          "INT",
+          "INT2",
+          "INT4",
+          "INT8",
+          "INTEGER",
+          "NCHAR",
+          "NUMBER",
+          "NUMERIC",
+          "NVARCHAR",
+          "OBJECT",
+          "REAL",
+          "SMALLINT",
+          "STRING",
+          "TEXT",
+          "TIME",
+          "TIMESTAMP",
+          "TIMESTAMPTZ",
+          "TIMESTAMP_LTZ",
+          "TIMESTAMP_NTZ",
+          "TIMESTAMP_TZ",
+          "VARBINARY",
+          "VARCHAR",
+          "VARIANT",
+          "VARYING"
+        ]
+      },
+      "edge": {
+        "type": "object",
+        "properties": {
+          "origin": {
+            "description": "The ID of the origin node.",
+            "type": "string"
+          },
+          "destination": {
+            "description": "The ID of the destination node.",
+            "type": "string"
+          }
+        }
+      },
+      "newTag": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "description": "The description of the tag.",
+            "type": "string"
+          }
+        },
+        "example": {
+          "description": "My first tag!"
+        }
+      },
+      "domainType": {
+        "description": "Type of the domain. Note - Domain Type cannot be modified after the domain is created.",
+        "type": "string",
+        "enum": [
+          "DEPARTMENT_BUSINESS",
+          "ENTERPRISE",
+          "SANDBOX"
+        ],
+        "nullable": true
+      },
+      "serviceType": {
+        "description": "The type of the managed service.",
+        "type": "string",
+        "enum": [
+          "FILE_COPY",
+          "FILE_INGESTION",
+          "JDBC_INGESTION",
+          "DQ_PROFILING"
+        ]
+      },
+      "sourceType": {
+        "description": "The type of the source system.",
+        "type": "string",
+        "enum": [
+          "DB2",
+          "NETEZZA",
+          "FILE"
+        ]
+      },
+      "newDomain": {
+        "type": "object",
+        "properties": {
+          "displayName": {
+            "$ref": "#/components/schemas/domaindisplayName"
+          },
+          "description": {
+            "$ref": "#/components/schemas/domaindescription"
+          },
+          "type": {
+            "$ref": "#/components/schemas/domaintype"
+          },
+          "owners": {
+            "description": "The owners of the domain. <li style=\"list-style-type:none;\">**Restrictions:**</li> <li>the DOMAIN owners must exist</li> <li>the domain cannot have any cyclic ownership (A owns B and B owns A)</li> <li>the domain cannot own itself (A cannot own A)</li> <li>the domain must be of type SANDBOX if its DOMAIN owner is of type SANDBOX</li> <li>the domain must have at least one INDIVIDUAL owner (directly or through one of its owners)</li>\n",
+            "items": {
+              "$ref": "#/components/schemas/domainowners"
+            },
+            "type": "array"
+          },
+          "accessGroups": {
+            "$ref": "#/components/schemas/domainaccessGroups"
+          },
+          "dataProducers": {
+            "$ref": "#/components/schemas/domaindataProducers"
+          },
+          "tags": {
+            "$ref": "#/components/schemas/domaintags"
+          }
+        },
+        "required": [
+          "name",
+          "owners"
+        ],
+        "example": {
+          "displayName": "IPS",
+          "description": "Investment, products, and services",
+          "type": "ENTERPRISE",
+          "owners": [
+            {
+              "type": "INDIVIDUAL",
+              "name": "Joe Sakic",
+              "lanId": "sak0091",
+              "domainRole": "testDomain"
+            },
+            {
+              "type": "INDIVIDUAL",
+              "name": "Sarah Connor",
+              "lanId": "con1997",
+              "domainRole": "testDomain"
+            },
+            {
+              "type": "DOMAIN",
+              "name": "otherdomain",
+              "domainRole": "Other Domain's Role"
+            }
+          ],
+          "accessGroups": [
+            "WG-T-800",
+            "WG-T-1000"
+          ],
+          "dataProducers": [
+            "WG-RESISTANCE"
+          ],
+          "tags": "INTERNAL,SANDBOX,SKYNET"
+        }
+      },
+      "domaindisplayName": {
+        "description": "The display name of the domain. This defaults to the domain name if one isn't provided.",
+        "type": "string",
+        "nullable": true
+      },
+      "domaintype": {
+        "$ref": "#/components/schemas/domainType"
+      },
+      "domaindescription": {
+        "description": "The description of the domain.",
+        "type": "string",
+        "nullable": true
+      },
+      "domainowners": {
+        "properties": {
+          "type": {
+            "description": "The type of owner.",
+            "type": "string",
+            "enum": [
+              "INDIVIDUAL",
+              "DOMAIN"
+            ]
+          },
+          "name": {
+            "description": "The full name of the domain owner.",
+            "type": "string"
+          },
+          "domainRole": {
+            "description": "The role of the domain owner in the domain.",
+            "type": "string"
+          },
+          "lanId": {
+            "description": "NM LAN identifier of the domain owner.",
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "type",
+          "name",
+          "domainRole"
+        ],
+        "title": "owner",
+        "type": "object"
+      },
+      "domainaccessGroups": {
+        "description": "The active directories associated with the domain that can query the data. MUST START WITH `WG`. The group(s) must also be a valid active directory group.",
+        "type": "array",
+        "nullable": true,
+        "items": {
+          "type": "string"
+        },
+        "properties": {
+          "name": {
+            "description": "name of the active directory",
+            "type": "string"
+          }
+        }
+      },
+      "domaindataProducers": {
+        "description": "A list of active directory goups that can update the data contract.",
+        "type": "array",
+        "items": {
+          "type": "string",
+          "nullable": true
+        },
+        "properties": {
+          "name": {
+            "description": "name of the active directory",
+            "type": "string"
+          }
+        }
+      },
+      "domaintags": {
+        "description": "List of tags (comma-separated) that will be applied universally within the domain.",
+        "type": "string",
+        "nullable": true
+      },
+      "domain": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "The name of the domain.",
+            "type": "string",
+            "nullable": true
+          },
+          "displayName": {
+            "description": "The display name of the domain. This defaults to the domain name if one isn't provided.",
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "$ref": "#/components/schemas/domainType"
+          },
+          "createdAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the date/time the domain was created.",
+            "type": "string",
+            "nullable": true,
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the date/time the domain was updated.",
+            "type": "string",
+            "nullable": true,
+            "format": "date-time"
+          },
+          "description": {
+            "description": "The description of the domain.",
+            "type": "string",
+            "nullable": true
+          },
+          "owners": {
+            "description": "The owners of the domain. <li style=\"list-style-type:none;\">**Restrictions:**</li> <li>the DOMAIN owners must exist</li> <li>the domain cannot have any cyclic ownership (A owns B and B owns A)</li> <li>the domain cannot own itself (A cannot own A)</li> <li>the domain must be of type SANDBOX if its DOMAIN owner is of type SANDBOX</li> <li>the domain must have at least one INDIVIDUAL owner (directly or through one of its owners)</li>\n",
+            "items": {
+              "$ref": "#/components/schemas/domainowners"
+            },
+            "type": "array"
+          },
+          "accessGroups": {
+            "description": "The active directories associated with the domain that can query the data. MUST START WITH `WG`. The group(s) must also be a valid active directory group.",
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            },
+            "properties": {
+              "name": {
+                "description": "name of the active directory",
+                "type": "string"
+              }
+            }
+          },
+          "dataProducers": {
+            "description": "A list of active directory goups that can update the data contract.",
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            },
+            "properties": {
+              "name": {
+                "description": "name of the active directory",
+                "type": "string"
+              }
+            }
+          },
+          "tags": {
+            "description": "List of tags (comma-separated) that will be applied universally within the domain.",
+            "type": "string",
+            "nullable": true
+          },
+          "published": {
+            "description": "true/false depending on whether the domain is published. Domain cannot be published using Create a domain endpoint.",
+            "type": "boolean",
+            "nullable": true,
+            "default": false
+          }
+        },
+        "example": {
+          "domain": {
+            "domain": "ips",
+            "displayName": "Enterprise IPS",
+            "type": "ENTERPRISE",
+            "createdAt": "2021-04-13T15:21:18.187Z",
+            "updatedAt": "2021-04-13T15:21:18.187Z",
+            "description": "Investment, products, and services",
+            "owners": [
+              {
+                "type": "INDIVIDUAL",
+                "name": "Joe Sakic",
+                "lanId": "sak0091",
+                "domainRole": "testDomain"
+              },
+              {
+                "type": "INDIVIDUAL",
+                "name": "Sarah Connor",
+                "lanId": "con1997",
+                "domainRole": "testDomain"
+              },
+              {
+                "type": "DOMAIN",
+                "name": "otherdomain",
+                "domainRole": "Other Domain's Role"
+              }
+            ],
+            "accessGroups": [
+              "WG-T-800",
+              "WG-T-1000"
+            ],
+            "dataProducers": [
+              "RESISTANCE"
+            ],
+            "tags": "INTERNAL,SKYNET",
+            "published": false
+          },
+          "empty": {}
+        }
+      },
+      "domains": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/domain"
+        },
+        "example": {
+          "domains": {
+            "value": [
+              {
+                "domain": "ips",
+                "displayName": "IPS",
+                "type": "ENTERPRISE",
+                "createdAt": "2021-04-13T15:21:18.187Z",
+                "updatedAt": "2021-04-13T15:21:18.187Z",
+                "description": "Investment, products, and services",
+                "owners": [
+                  {
+                    "type": "INDIVIDUAL",
+                    "name": "Joe Sakic",
+                    "lanId": "sak0091",
+                    "domainRole": "testDomain"
+                  },
+                  {
+                    "type": "INDIVIDUAL",
+                    "name": "Sarah Connor",
+                    "lanId": "con1997",
+                    "domainRole": "testDomain"
+                  },
+                  {
+                    "type": "DOMAIN",
+                    "name": "otherdomain",
+                    "domainRole": "Other Domain's Role"
+                  }
+                ],
+                "accessGroups": [
+                  "WG-T-800",
+                  "WG-T-1000"
+                ],
+                "dataProducers": [
+                  "RESISTANCE"
+                ],
+                "tags": "INTERNAL,SANDBOX,SKYNET",
+                "published": false
+              },
+              {
+                "domain": "client",
+                "displayName": "Client Information",
+                "type": "ENTERPRISE",
+                "createdAt": "2021-01-13T15:21:18.187Z",
+                "updatedAt": "2021-01-13T15:21:18.187Z",
+                "description": "Client related information",
+                "owners": [
+                  {
+                    "type": "INDIVIDUAL",
+                    "name": "Aaron Rodgers",
+                    "lanId": "rod0012",
+                    "domainRole": "testDomain"
+                  },
+                  {
+                    "type": "INDIVIDUAL",
+                    "name": "Jon Conner",
+                    "lanId": "con1997",
+                    "domainRole": "testDomain"
+                  },
+                  {
+                    "type": "DOMAIN",
+                    "name": "otherdomain",
+                    "domainRole": "Other Domain's Role"
+                  }
+                ],
+                "accessGroups": [
+                  "WG-C-800",
+                  "WG-C-1000"
+                ],
+                "dataProducers": [
+                  ""
+                ],
+                "tags": "INTERNAL,NOFATE",
+                "published": false
+              }
+            ]
+          },
+          "empty": {
+            "value": []
+          }
+        }
+      },
+      "newSource": {
+        "type": "object",
+        "properties": {
+          "displayName": {
+            "description": "The display name of the source. This defaults to the source name if one isn't provided.",
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "$ref": "#/components/schemas/sourceType"
+          },
+          "connectionUrl": {
+            "description": "The JDBC connection string to be used to connect to the source. Note that this should NOT contain any credentials, as those are managed within the NM Enterprise Vault system.",
+            "type": "string",
+            "format": "URL"
+          },
+          "description": {
+            "description": "The description of the source.",
+            "type": "string",
+            "nullable": true
+          },
+          "tags": {
+            "description": "List of tags (comma-separated) that will be applied to all data from the source.",
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "type",
+          "connectionUrl"
+        ],
+        "example": {
+          "DB2": {
+            "displayName": "Cyberdyne DB2",
+            "type": "DB2",
+            "connectionUrl": "jdbc:db2://somedataserver.nml.com/cyberdyne",
+            "description": "Used to house Cyberdyne employee records.",
+            "tags": "DB2,CYBERDYNE"
+          },
+          "NETEZZA": {
+            "displayName": "Client Salaries",
+            "type": "NETEZZA,",
+            "connectionUrl": "jdbc:netezza://host:port/database",
+            "description": "Used to house client salaries",
+            "tags": "NETEZZA"
+          },
+          "FILE": {
+            "displayName": "Client Annual Income",
+            "type": "FILE,",
+            "connectionUrl": "s3://udp-datalake-dev/CLIENT/silver/BIIPODT1/biipods.clt_annual_income_range_val/",
+            "description": "Used to house client data",
+            "tags": "FILE"
+          }
+        }
+      },
+      "source": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "description": "The domain of the source.",
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "description": "The name of the source.",
+            "type": "string",
+            "nullable": true
+          },
+          "displayName": {
+            "description": "The display name of the source. This defaults to the source name if one isn't provided.",
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "$ref": "#/components/schemas/sourceType",
+            "nullable": true
+          },
+          "createdAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the date/time the source was created.",
+            "type": "string",
+            "nullable": true,
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the date/time the source was updated.",
+            "type": "string",
+            "nullable": true,
+            "format": "date-time"
+          },
+          "connectionUrl": {
+            "description": "The JDBC connection string to be used to connect to the source. Note that this should NOT contain any credentials, as those are managed within the NM Enterprise Vault system.",
+            "type": "string",
+            "nullable": true,
+            "format": "URL"
+          },
+          "description": {
+            "description": "The description of the source.",
+            "type": "string",
+            "nullable": true
+          },
+          "tags": {
+            "description": "List of tags (comma-separated) that will be applied to all data from the source.",
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "example": {
+          "source": {
+            "domain": "ips",
+            "name": "cybdyndt",
+            "displayName": "Cyberdyne Employee Records",
+            "type": "DB2",
+            "createdAt": "2021-04-13T15:21:18.187Z",
+            "updatedAt": "2021-04-13T15:21:18.187Z",
+            "connectionUrl": "jdbc:db2://somedataserver.nml.com/cyberdyne",
+            "description": "Used to house Cyberdyne employee records.",
+            "tags": "DB2,CYBERDYNE"
+          },
+          "empty": {}
+        }
+      },
+      "sources": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/source"
+        },
+        "example": {
+          "sources": [
+            {
+              "domain": "ips",
+              "name": "cyberdynedb",
+              "displayName": "Cyberdyne DB2",
+              "type": "DB2",
+              "connectionUrl": "jdbc:db2://somedataserver.nml.com/cyberdyne",
+              "description": "Used to house Cyberdyne employee records",
+              "createdAt": "2021-04-13T15:21:18.187Z",
+              "updatedAt": "2021-04-13T15:21:18.187Z",
+              "tags": "DB2,CYBERDYNE"
+            },
+            {
+              "domain": "ips",
+              "name": "salariesnetezza",
+              "displayName": "Client Salaries",
+              "type": "NETEZZA",
+              "connectionUrl": "jdbc:netezza://host:port/database",
+              "createdAt": "2021-04-13T15:21:18.187Z",
+              "updatedAt": "2021-04-13T15:21:18.187Z",
+              "description": "Used to house client salaries",
+              "tags": "NETEZZA"
+            },
+            {
+              "domain": "ips",
+              "displayName": "Client Annual Income",
+              "name": "filename",
+              "type": "FILE",
+              "connectionUrl": "s3://udp-datalake-dev/CLIENT/silver/BIIPODT1/biipods.clt_annual_income_range_val/",
+              "createdAt": "2021-04-13T15:21:18.187Z",
+              "updatedAt": "2021-04-13T15:21:18.187Z",
+              "description": "Used to house client data",
+              "tags": "FILE"
+            }
+          ],
+          "empty": []
+        }
+      },
+      "newProduct": {
+        "type": "object",
+        "properties": {
+          "displayName": {
+            "$ref": "#/components/schemas/displayName"
+          },
+          "description": {
+            "$ref": "#/components/schemas/description"
+          },
+          "businessPurpose": {
+            "$ref": "#/components/schemas/businessPurpose"
+          },
+          "owners": {
+            "description": "A list of product owners.",
+            "items": {
+              "$ref": "#/components/schemas/Product_Owner"
+            },
+            "type": "array"
+          },
+          "domainDetails": {
+            "$ref": "#/components/schemas/domainDetails"
+          },
+          "dataRights": {
+            "$ref": "#/components/schemas/dataRights"
+          },
+          "dataRegulatory": {
+            "$ref": "#/components/schemas/dataRegulatory"
+          },
+          "facets": {
+            "description": "A grouping of other, optional aspects to loosly attach to the product.",
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/facets"
+            }
+          },
+          "tags": {
+            "$ref": "#/components/schemas/tags"
+          }
+        },
+        "required": [
+          "description",
+          "businessPurpose",
+          "owners",
+          "dataRights",
+          "dataRegulatory"
+        ],
+        "example": {
+          "displayName": "My Example Product",
+          "description": "This is an example product.",
+          "businessPurpose": "To show others how to create Data Contract V2 Products.",
+          "owners": [
+            {
+              "name": "Joe Sakic",
+              "lanId": "sak0091"
+            }
+          ],
+          "domainDetails": {
+            "dataRetention": 90,
+            "dataQuality": [
+              "DataQualityRule1",
+              "DataQualityRule2"
+            ]
+          },
+          "dataRights": "This example product has no terms of service and can be used freely.",
+          "dataRegulatory": false,
+          "facets": [
+            {
+              "type": "INTERNAL",
+              "sourceToSinkMap": {
+                "source1": "sink1",
+                "source2": "sink2"
+              },
+              "schema": "{\"type\":\"record\",\"name\":\"schema\",\"fields\":[{\"name\":\"field1\",\"type\":\"string\",\"default\":\"NONE\"},{\"name\":\"field2\",\"type\":{\"type\":\"record\",\"name\":\"nested_record\",\"fields\":[{\"name\":\"field2a\",\"type\":\"string\",\"default\":\"NONE\"},{\"name\":\"field2b\",\"type\":\"string\",\"default\":\"NONE\"}]},\"default\":{}}]}",
+              "sla": {
+                "latency": 100,
+                "timePeriod": 100
+              },
+              "privacyRestrictions": {
+                "FIELD_TYPES": [
+                  "field1",
+                  "field2"
+                ],
+                "COLUMNS": [
+                  "col1",
+                  "col2"
+                ]
+              },
+              "relationships": "The schema has no relationships",
+              "tags": "INTERNAL",
+              "pipelines": [
+                "pipeline1",
+                "pipeline2"
+              ],
+              "dataScienceModel": {
+                "modelName": "Example Model",
+                "modelVersions": [
+                  {
+                    "versionId": 1,
+                    "modelSource": "DATABRICKS",
+                    "predictMethod": "predict",
+                    "pickle": {
+                      "packageManager": "pip",
+                      "picklingLibrary": "pickle",
+                      "file": "model.pickle"
+                    },
+                    "preprocessingPickle": {
+                      "packageManager": "pip",
+                      "picklingLibrary": "pickle",
+                      "file": "input_preprocessing.pickle"
+                    },
+                    "signature": {
+                      "input": "\"type\":\"inputSchema\",\"name\":\"input\",\"fields\":[{\"name\":\"inputField1\",\"type\":\"string\"},{\"name\":\"inputField2\",\"type\":\"string\"}]}",
+                      "output": "\"type\":\"outputSchema\",\"name\":\"output\",\"fields\":[{\"name\":\"outputField1\",\"type\":\"string\"},{\"name\":\"outputField2\",\"type\":\"string\"}]}"
+                    },
+                    "stage": "NONE",
+                    "createdAt": "2021-08-20T11:15:38.975Z",
+                    "updatedAt": "2021-08-20T12:06:35.790Z"
+                  }
+                ]
+              }
+            }
+          ],
+          "tags": "INTERNAL"
+        }
+      },
+      "displayName": {
+        "description": "The display name of the product. This defaults to the product name if one isn't provided.",
+        "type": "string",
+        "nullable": true
+      },
+      "description": {
+        "description": "The description of the product.",
+        "type": "string"
+      },
+      "businessPurpose": {
+        "description": "The high level business purpose of the product (different from the description).",
+        "type": "string"
+      },
+      "Product_Owner": {
+        "properties": {
+          "name": {
+            "description": "The name of the owner.",
+            "type": "string"
+          },
+          "lanId": {
+            "description": "The LAN ID of the owner.",
+            "type": "string"
+          }
+        },
+        "title": "Product Owner",
+        "type": "object"
+      },
+      "domainDetails": {
+        "description": "The details that can be shared with the domain. The values default to the domain's values if they are not provided.",
+        "type": "object",
+        "nullable": true,
+        "properties": {
+          "dataRetention": {
+            "description": "The number of days to keep data. Defaults to the domain facet's data retention value. **Cannot** be less than the domain's value.",
+            "type": "integer",
+            "nullable": true
+          },
+          "dataQuality": {
+            "description": "The data quality rules to apply to the product. Defaults to the domain facet's data quality value.",
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "tags": {
+        "description": "List of tags (comma-separated) that will be applied to the product.",
+        "type": "string",
+        "nullable": true
+      },
+      "dataRights": {
+        "description": "A contract/terms of service.",
+        "type": "string"
+      },
+      "dataRegulatory": {
+        "description": "Whether or not the data is considered regulatory.",
+        "type": "boolean"
+      },
+      "facets": {
+        "title": "Product Facet",
+        "type": "object",
+        "properties": {
+          "type": {
+            "description": "The type of the facet.",
+            "type": "string",
+            "enum": [
+              "INTERNAL",
+              "EXTERNAL"
+            ]
+          },
+          "sourceToSinkMap": {
+            "title": "Map<Source, Sink>",
+            "description": "A mapping of source locations to the result locations.",
+            "type": "object",
+            "nullable": true,
+            "additionalProperties": {
+              "description": "key (*property name*): source location<br> value: sink location<br> Example: _{\"sourceName\": \"sinkName\"}_\n",
+              "type": "string"
+            }
+          },
+          "schema": {
+            "description": "A JSON schema which defines required fields.",
+            "type": "string",
+            "nullable": true
+          },
+          "sla": {
+            "description": "The Service Level Agreement of the Product.",
+            "type": "object",
+            "nullable": true,
+            "properties": {
+              "latency": {
+                "description": "The maximum time that data should be available within (in ms).",
+                "type": "integer"
+              },
+              "timePeriod": {
+                "description": "The time period associated with the data (in ms).",
+                "type": "integer"
+              }
+            }
+          },
+          "privacyRestrictions": {
+            "title": "Map<RestrictionType, List<String>>",
+            "description": "A complex field which represents all possible privacy restrictions. The key represents the type of policy restriction that would apply and the value is the list of things to be restricted.<br> Example: an entry of _\"COLUMNS\": [\"col1\", \"col2\", \"col3\"]_ would specify those three columns to be hidden by Privacera.",
+            "type": "object",
+            "nullable": true,
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "relationships": {
+            "description": "A description of the attributes described in the schema.",
+            "type": "string",
+            "nullable": true
+          },
+          "tags": {
+            "description": "List of (comma-separated) that will be applied to the facet.",
+            "type": "string",
+            "nullable": true
+          },
+          "pipelines": {
+            "description": "A list of strings defining the name of each pipeline required to move the datasets to the silver zone, etc.",
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "dataScienceModel": {
+            "description": "A data science model associated with the product.",
+            "type": "object",
+            "nullable": true,
+            "properties": {
+              "modelName": {
+                "description": "The name of the data science model.",
+                "type": "string"
+              },
+              "modelVersions": {
+                "description": "The versions of the model.",
+                "type": "array",
+                "nullable": true,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "versionId": {
+                      "description": "The version of the model.",
+                      "type": "integer"
+                    },
+                    "experiment": {
+                      "description": "The MLflow experiment the model belongs to, currently it's required for INTERNAL model type.",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "runId": {
+                      "description": "The MLflow run id which the model version is associated with.",
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "modelSource": {
+                      "description": "The source of the model.",
+                      "type": "string",
+                      "enum": [
+                        "DATABRICKS",
+                        "INTERNAL",
+                        "DOMINO",
+                        "DATA_ROBOT"
+                      ]
+                    },
+                    "artifactSource": {
+                      "description": "The source of the required artifacts, currently it's required for INTERNAL model type.",
+                      "type": "object",
+                      "nullable": true,
+                      "properties": {
+                        "projectId": {
+                          "description": "The project ID of the repository to pull artifacts from.",
+                          "type": "string"
+                        },
+                        "artifactDir": {
+                          "description": "The relative path of the artifact directory from the root of the repository.",
+                          "type": "string"
+                        },
+                        "branchName": {
+                          "description": "The branch name of artifact repo.",
+                          "type": "string"
+                        },
+                        "identityKey": {
+                          "description": "The ID of an SSM parameter or a value in the credential service (overrides the default token).",
+                          "type": "string",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "predictMethod": {
+                      "description": "The method to to be called on the model.",
+                      "type": "string"
+                    },
+                    "outputOffset": {
+                      "description": "The index of the model output for the actual prediction result.",
+                      "type": "integer",
+                      "nullable": true
+                    },
+                    "pickle": {
+                      "description": "The model pickle file.",
+                      "type": "object",
+                      "properties": {
+                        "packageManager": {
+                          "description": "The package manager used to install the appropriate pickle library.",
+                          "type": "string"
+                        },
+                        "picklingLibrary": {
+                          "description": "The pickling library that was used to pickle the pickle file.",
+                          "type": "string"
+                        },
+                        "file": {
+                          "description": "The name of the pickle file within the artifacts.",
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "preprocessingPickle": {
+                      "description": "Preprocessing Pickle file that is used to preprocess input data so that it's proper format for model prediction.",
+                      "type": "object",
+                      "nullable": true,
+                      "properties": {
+                        "packageManager": {
+                          "description": "The package manager used to install the appropriate pickle library.",
+                          "type": "string"
+                        },
+                        "picklingLibrary": {
+                          "description": "The pickling library that was used to pickle the pickle file.",
+                          "type": "string"
+                        },
+                        "file": {
+                          "description": "The name of the pickle file within the artifacts.",
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "signature": {
+                      "description": "The schema of the model inputs and outputs.",
+                      "type": "object",
+                      "properties": {
+                        "input": {
+                          "description": "The schema of the model inputs.",
+                          "type": "string"
+                        },
+                        "output": {
+                          "description": "The schema of the model outputs.",
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "stage": {
+                      "description": "The stage of the model vesrion.",
+                      "type": "string",
+                      "enum": [
+                        "NONE",
+                        "STAGING",
+                        "PRODUCTION",
+                        "ARCHIVED"
+                      ]
+                    },
+                    "createdAt": {
+                      "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the date/time the model version was created.",
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updatedAt": {
+                      "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the date/time the model version was updated.",
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "product": {
+        "title": "Product",
+        "type": "object",
+        "properties": {
+          "domain": {
+            "description": "The domain of the product.",
+            "type": "string"
+          },
+          "name": {
+            "description": "The name of the product.",
+            "type": "string"
+          },
+          "displayName": {
+            "$ref": "#/components/schemas/displayName"
+          },
+          "createdAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the date/time the product was created.",
+            "type": "string",
+            "nullable": true,
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the date/time the product was updated.",
+            "type": "string",
+            "nullable": true,
+            "format": "date-time"
+          },
+          "description": {
+            "$ref": "#/components/schemas/description"
+          },
+          "businessPurpose": {
+            "$ref": "#/components/schemas/businessPurpose"
+          },
+          "owners": {
+            "description": "A list of product owners.",
+            "items": {
+              "$ref": "#/components/schemas/Product_Owner"
+            },
+            "type": "array"
+          },
+          "domainDetails": {
+            "$ref": "#/components/schemas/domainDetails"
+          },
+          "trusted": {
+            "description": "Whether or not the product's source is a trusted/raw data source (cannot be manually changed).",
+            "type": "boolean",
+            "nullable": true
+          },
+          "dataRights": {
+            "$ref": "#/components/schemas/dataRights"
+          },
+          "dataRegulatory": {
+            "$ref": "#/components/schemas/dataRegulatory"
+          },
+          "facets": {
+            "description": "A grouping of other, optional aspects to loosly attach to the product.",
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/facets"
+            }
+          },
+          "tags": {
+            "$ref": "#/components/schemas/tags"
+          }
+        },
+        "example": {
+          "product": {
+            "domain": "ips",
+            "name": "exampleproduct",
+            "displayName": "My Example Product",
+            "createdAt": "2019-08-24T14:15:22.000Z",
+            "updatedAt": "2019-08-24T14:15:22.000Z",
+            "description": "This is an example product.",
+            "businessPurpose": "To show others how to create Data Contract V2 Products.",
+            "owners": [
+              {
+                "name": "Joe Sakic",
+                "lanId": "sak0091"
+              }
+            ],
+            "domainDetails": {
+              "dataRetention": 90,
+              "dataQuality": [
+                "DataQualityRule1",
+                "DataQualityRule2"
+              ]
+            },
+            "trusted": false,
+            "dataRights": "This example product has no terms of service and can be used freely.",
+            "dataRegulatory": false,
+            "facets": [
+              {
+                "type": "INTERNAL",
+                "sourceToSinkMap": {
+                  "source1": "sink1",
+                  "source2": "sink2"
+                },
+                "schema": "{\"type\":\"record\",\"name\":\"schema\",\"fields\":[{\"name\":\"field1\",\"type\":\"string\",\"default\":\"NONE\"},{\"name\":\"field2\",\"type\":{\"type\":\"record\",\"name\":\"nested_record\",\"fields\":[{\"name\":\"field2a\",\"type\":\"string\",\"default\":\"NONE\"},{\"name\":\"field2b\",\"type\":\"string\",\"default\":\"NONE\"}]},\"default\":{}}]}",
+                "sla": {
+                  "latency": 100,
+                  "timePeriod": 100
+                },
+                "privacyRestrictions": {
+                  "FIELD_TYPES": [
+                    "field1",
+                    "field2"
+                  ],
+                  "COLUMNS": [
+                    "col1",
+                    "col2"
+                  ]
+                },
+                "relationships": "The schema has no relationships",
+                "tags": "INTERNAL",
+                "pipelines": [
+                  "pipeline1",
+                  "pipeline2"
+                ],
+                "dataScienceModel": {
+                  "modelName": "Example Model",
+                  "modelVersion": 1,
+                  "modelSource": "DATABRICKS",
+                  "artifactSource": {
+                    "projectId": "udp-project-id",
+                    "artifactDir": "/path/to/artifact",
+                    "identityKey": "my-ssm-param"
+                  },
+                  "predictMethod": "com.nm.udp.data-science.models.example-model.main",
+                  "pickles": [
+                    {
+                      "packageManager": "Python",
+                      "picklingLibrary": "mlflow",
+                      "file": "my_pickle_file.pickle",
+                      "responsibility": "MODEL"
+                    }
+                  ],
+                  "preprocessingPickle": {
+                    "packageManager": "pip",
+                    "picklingLibrary": "pickle",
+                    "file": "input_preprocessing.pickle"
+                  },
+                  "signature": {
+                    "input": "\"type\":\"inputSchema\",\"name\":\"input\",\"fields\":[{\"name\":\"inputField1\",\"type\":\"string\"},{\"name\":\"inputField2\",\"type\":\"string\"}]}",
+                    "output": "\"type\":\"outputSchema\",\"name\":\"output\",\"fields\":[{\"name\":\"outputField1\",\"type\":\"string\"},{\"name\":\"outputField2\",\"type\":\"string\"}]}"
+                  }
+                }
+              }
+            ],
+            "tags": "INTERNAL"
+          },
+          "empty": {}
+        }
+      },
+      "products": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/product"
+        },
+        "example": {
+          "products": [
+            {
+              "domain": "ips",
+              "name": "exampleproduct",
+              "displayName": "My Example Product",
+              "createdAt": "2019-08-24T14:15:22.000Z",
+              "updatedAt": "2019-08-24T14:15:22.000Z",
+              "description": "This is an example product.",
+              "businessPurpose": "To show others how to create Data Contract V2 Products.",
+              "owners": [
+                {
+                  "name": "Joe Sakic",
+                  "lanId": "sak0091"
+                }
+              ],
+              "domainDetails": {
+                "dataRetention": 90,
+                "dataQuality": [
+                  "DataQualityRule1",
+                  "DataQualityRule2"
+                ]
+              },
+              "trusted": false,
+              "dataRights": "This example product has no terms of service and can be used freely.",
+              "dataRegulatory": false,
+              "facets": [
+                {
+                  "type": "INTERNAL",
+                  "sourceToSinkMap": {
+                    "source1": "sink1",
+                    "source2": "sink2"
+                  },
+                  "schema": "{\"type\":\"record\",\"name\":\"schema\",\"fields\":[{\"name\":\"field1\",\"type\":\"string\",\"default\":\"NONE\"},{\"name\":\"field2\",\"type\":{\"type\":\"record\",\"name\":\"nested_record\",\"fields\":[{\"name\":\"field2a\",\"type\":\"string\",\"default\":\"NONE\"},{\"name\":\"field2b\",\"type\":\"string\",\"default\":\"NONE\"}]},\"default\":{}}]}",
+                  "sla": {
+                    "latency": 100,
+                    "timePeriod": 100
+                  },
+                  "privacyRestrictions": {
+                    "FIELD_TYPES": [
+                      "field1",
+                      "field2"
+                    ],
+                    "COLUMNS": [
+                      "col1",
+                      "col2"
+                    ]
+                  },
+                  "relationships": "The schema has no relationships",
+                  "tags": "INTERNAL",
+                  "pipelines": [
+                    "pipeline1",
+                    "pipeline2"
+                  ],
+                  "dataScienceModel": {
+                    "modelName": "Example Model",
+                    "modelVersion": 1,
+                    "modelSource": "DATABRICKS",
+                    "artifactSource": {
+                      "projectId": "udp-project-id",
+                      "artifactDir": "/path/to/artifact",
+                      "identityKey": "my-ssm-param"
+                    },
+                    "predictMethod": "com.nm.udp.data-science.models.example-model.main",
+                    "pickles": [
+                      {
+                        "packageManager": "Python",
+                        "picklingLibrary": "mlflow",
+                        "file": "my_pickle_file.pickle",
+                        "responsibility": "MODEL"
+                      }
+                    ],
+                    "signature": {
+                      "input": "\"type\":\"inputSchema\",\"name\":\"input\",\"fields\":[{\"name\":\"inputField1\",\"type\":\"string\"},{\"name\":\"inputField2\",\"type\":\"string\"}]}",
+                      "output": "\"type\":\"outputSchema\",\"name\":\"output\",\"fields\":[{\"name\":\"outputField1\",\"type\":\"string\"},{\"name\":\"outputField2\",\"type\":\"string\"}]}"
+                    }
+                  }
+                }
+              ],
+              "tags": "INTERNAL"
+            },
+            {
+              "domain": "ips",
+              "name": "otherexampleproduct",
+              "displayName": "My Other Example Product",
+              "createdAt": "2019-08-24T14:15:33.000Z",
+              "updatedAt": "2019-08-24T14:15:33.000Z",
+              "description": "This is another example product.",
+              "businessPurpose": "To show others how to create Data Contract V2 Products.",
+              "owners": [
+                {
+                  "name": "Joe Sakic",
+                  "lanId": "sak0091"
+                }
+              ],
+              "domainDetails": {
+                "dataRetention": 90,
+                "dataQuality": [
+                  "DataQualityRule1",
+                  "DataQualityRule2"
+                ]
+              },
+              "trusted": false,
+              "dataRights": "This other example product also has no terms of service and can be used freely.",
+              "dataRegulatory": false,
+              "facets": [
+                {
+                  "type": "INTERNAL",
+                  "sourceToSinkMap": {
+                    "source1": "sink1",
+                    "source2": "sink2"
+                  },
+                  "schema": "{\"type\":\"record\",\"name\":\"schema\",\"fields\":[{\"name\":\"field1\",\"type\":\"string\",\"default\":\"NONE\"},{\"name\":\"field2\",\"type\":{\"type\":\"record\",\"name\":\"nested_record\",\"fields\":[{\"name\":\"field2a\",\"type\":\"string\",\"default\":\"NONE\"},{\"name\":\"field2b\",\"type\":\"string\",\"default\":\"NONE\"}]},\"default\":{}}]}",
+                  "sla": {
+                    "latency": 100,
+                    "timePeriod": 100
+                  },
+                  "privacyRestrictions": {
+                    "FIELD_TYPES": [
+                      "field1",
+                      "field2"
+                    ],
+                    "COLUMNS": [
+                      "col1",
+                      "col2"
+                    ]
+                  },
+                  "relationships": "The schema has no relationships",
+                  "tags": "INTERNAL",
+                  "pipelines": [
+                    "pipeline1",
+                    "pipeline2"
+                  ],
+                  "dataScienceModel": {
+                    "modelName": "Example Model",
+                    "modelVersion": 1,
+                    "modelSource": "DATABRICKS",
+                    "artifactSource": {
+                      "projectId": "udp-project-id",
+                      "artifactDir": "/path/to/artifact",
+                      "identityKey": "my-ssm-param"
+                    },
+                    "predictMethod": "com.nm.udp.data-science.models.example-model.main",
+                    "pickles": [
+                      {
+                        "packageManager": "Python",
+                        "picklingLibrary": "mlflow",
+                        "file": "my_pickle_file.pickle",
+                        "responsibility": "MODEL"
+                      }
+                    ],
+                    "signature": {
+                      "input": "\"type\":\"inputSchema\",\"name\":\"input\",\"fields\":[{\"name\":\"inputField1\",\"type\":\"string\"},{\"name\":\"inputField2\",\"type\":\"string\"}]}",
+                      "output": "\"type\":\"outputSchema\",\"name\":\"output\",\"fields\":[{\"name\":\"outputField1\",\"type\":\"string\"},{\"name\":\"outputField2\",\"type\":\"string\"}]}"
+                    }
+                  }
+                }
+              ],
+              "tags": "INTERNAL"
+            }
+          ],
+          "empty": []
+        }
+      },
+      "newService": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/serviceType"
+          },
+          "options": {
+            "description": "Options allowing for configurable behavior within the service.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "description": "The name of the configuration key.",
+                  "type": "string"
+                },
+                "value": {
+                  "description": "Configuration value for the applicable key.",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "value"
+              ]
+            }
+          },
+          "schedule": {
+            "description": "CRON schedule that can be optionally applied.",
+            "type": "string"
+          },
+          "description": {
+            "description": "Describes the purpose of the service instance.",
+            "type": "string"
+          },
+          "enabled": {
+            "description": "Whether or not the service is enabled.",
+            "type": "boolean",
+            "default": true
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "example": {
+          "type": "FILE_INGESTION",
+          "fields": [
+            {
+              "name": "format",
+              "value": "csv"
+            },
+            {
+              "name": "delimiter",
+              "value": "|"
+            }
+          ],
+          "schedule": "0 3 * * 1-6",
+          "description": "Incrementally ingests Cyberdyne data from the DB2, NETEZZA, or FILE source",
+          "enabled": true
+        }
+      },
+      "service": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "description": "The name of the domain the service is registered in.",
+            "type": "string"
+          },
+          "name": {
+            "description": "The name of the service.",
+            "type": "string"
+          },
+          "createdAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the date/time the service was created.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "description": "An [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) timestamp representing the date/time the service was updated.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "type": {
+            "$ref": "#/components/schemas/serviceType"
+          },
+          "options": {
+            "description": "Options allowing for configurable behavior within the service.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "description": "The name of the configuration key.",
+                  "type": "string"
+                },
+                "value": {
+                  "description": "Configuration value for the applicable key.",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "value"
+              ]
+            }
+          },
+          "schedule": {
+            "description": "CRON schedule that can be optionally applied.",
+            "type": "string"
+          },
+          "description": {
+            "description": "Describes the purpose of the service instance.",
+            "type": "string"
+          },
+          "enabled": {
+            "description": "Whether or not the service is enabled.",
+            "type": "boolean",
+            "default": true
+          }
+        },
+        "example": {
+          "service": {
+            "domain": "ips",
+            "name": "cyberdyne-file-ingestion",
+            "createdAt": "2021-04-13T15:21:18.187Z",
+            "updatedAt": "2021-04-13T15:21:18.187Z",
+            "type": "FILE_INGESTION",
+            "options": [
+              {
+                "name": "format",
+                "value": "csv"
+              },
+              {
+                "name": "delimiter",
+                "value": "|"
+              },
+              {
+                "name": "timeoutseconds",
+                "value": "480"
+              }
+            ],
+            "schedule": "0 3 * * 1-6",
+            "description": "Incrementally ingests Cyberdyne data from the DB2, NETEZZA, or FILE source",
+            "enabled": true
+          },
+          "empty": {}
+        }
+      },
+      "services": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/service"
+        },
+        "example": {
+          "services": [
+            {
+              "domain": "ips",
+              "name": "cyberdyne-jdbc-ingestion",
+              "createdAt": "2021-04-13T15:21:18.187953Z",
+              "updatedAt": "2021-04-13T15:21:18.187953Z",
+              "type": "JDBC_INGESTION",
+              "options": [
+                {
+                  "name": "source",
+                  "value": "cybdyndt1"
+                },
+                {
+                  "name": "mode",
+                  "value": "full"
+                },
+                {
+                  "name": "filter",
+                  "value": "BIIPODS.ctl_lookup_table"
+                },
+                {
+                  "name": "maxConcurrentConnections",
+                  "value": "4"
+                },
+                {
+                  "name": "timeoutseconds",
+                  "value": "300"
+                }
+              ],
+              "schedule": "0 3 * * 1-6",
+              "description": "Performs a full truncate/reload on a lookup table",
+              "enabled": true
+            },
+            {
+              "domain": "ips",
+              "name": "cyberdyne-file-ingestion",
+              "createdAt": "2021-04-13T15:21:18.187Z",
+              "updatedAt": "2021-04-13T15:21:18.187Z",
+              "type": "FILE_INGESTION",
+              "options": [
+                {
+                  "name": "format",
+                  "value": "csv"
+                },
+                {
+                  "name": "delimiter",
+                  "value": "|"
+                },
+                {
+                  "name": "timeoutseconds",
+                  "value": "300"
+                }
+              ],
+              "schedule": "0 3 * * 1-6",
+              "description": "Incrementally ingests Cyberdyne data from the DB2",
+              "NETEZZA": null,
+              "or FILE source": null,
+              "enabled": true
+            },
+            {
+              "domain": "ips",
+              "name": "cyberdyne-file-copy",
+              "createdAt": "2021-04-13T15:21:18.187Z",
+              "updatedAt": "2021-04-13T15:21:18.187Z",
+              "type": "FILE_COPY",
+              "options": [
+                {
+                  "name": "overwrite",
+                  "value": "true"
+                }
+              ],
+              "description": "Allow files to be overwritten within a certain subfolder",
+              "enabled": true
+            },
+            {
+              "domain": "ips",
+              "name": "cyberdyne-dq-profiling",
+              "createdAt": "2021-04-13T15:21:18.187Z",
+              "updatedAt": "2021-04-13T15:21:18.187Z",
+              "type": "DQ_PROFILING",
+              "options": [
+                {
+                  "name": "path",
+                  "value": "s3://udp-datalake-dev/CLIENT/silver/BIIPODT1/biipods.clt_annual_income_range_val/"
+                },
+                {
+                  "name": "domain",
+                  "value": "CLIENT"
+                },
+                {
+                  "name": "source",
+                  "value": "BIIPODT1"
+                },
+                {
+                  "name": "product",
+                  "value": "biipods.clt_annual_income_range_val"
+                }
+              ],
+              "description": "Performs data profiling for each column of the given table to collect general statistics about the data",
+              "schedule": "0 3 * * 1-6",
+              "enabled": true
+            }
+          ],
+          "empty": []
+        }
+      },
+      "endpoint": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "name of the endpoint",
+            "type": "string"
+          },
+          "endpoint": {
+            "description": "address of the endpoint",
+            "type": "string"
+          },
+          "description": {
+            "description": "description of the endpoint",
+            "type": "string"
+          }
+        }
+      },
+      "endpoints": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "description": "the name of the domain",
+            "type": "string"
+          },
+          "endpointList": {
+            "description": "a list of endpoints for the domain",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/endpoint"
+            }
+          }
+        },
+        "example": {
+          "domain": "ips",
+          "endpoints": [
+            {
+              "name": "CSV-LANDING",
+              "endpoint": "s3://root/ips/landing/ingest/csv/",
+              "description": "landing endpoint for csv files"
+            },
+            {
+              "name": "JSON-RAW",
+              "endpoint": "s3://root/ips/raw/json/",
+              "description": "endpoint for copied files for json files"
+            },
+            {
+              "name": "BRONZE",
+              "endpoint": "s3://datalake/ips/",
+              "description": "landing endpoint for csv files"
+            }
+          ]
+        }
+      },
+      "newSchema": {
+        "type": "object",
+        "properties": {
+          "compatibility": {
+            "description": "compatibility type of the schema",
+            "type": "string",
+            "enum": [
+              "BACKWARD",
+              "BACKWARD_ALL",
+              "FORWARD",
+              "FORWARD_ALL",
+              "FULL",
+              "FULL_ALL",
+              "NONE",
+              "DISABLED"
+            ]
+          },
+          "schemaDefinition": {
+            "description": "AVRO schema as JSON string",
+            "type": "string"
+          }
+        },
+        "required": [
+          "compatibility",
+          "schemaDefinition"
+        ],
+        "example": {
+          "compatibility": "BACKWARD_ALL",
+          "schemaDefinition": "{\"type\":\"record\",\"name\":\"schema1\",\"fields\":[{\"name\":\"field1\",\"type\":\"string\",\"default\":\"NONE\"},{\"name\":\"field2\",\"type\":{\"type\":\"record\",\"name\":\"nested_record\",\"fields\":[{\"name\":\"field2a\",\"type\":\"string\",\"default\":\"NONE\"},{\"name\":\"field2b\",\"type\":\"string\",\"default\":\"NONE\"}]},\"default\":{}}]}"
+        }
+      },
+      "schema": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "description": "name of the domain",
+            "type": "string"
+          },
+          "name": {
+            "description": "name of the schema",
+            "type": "string"
+          },
+          "compatibility": {
+            "description": "compatibility type of the schema",
+            "type": "string",
+            "enum": [
+              "BACKWARD",
+              "BACKWARD_ALL",
+              "FORWARD",
+              "FORWARD_ALL",
+              "FULL",
+              "FULL_ALL",
+              "NONE",
+              "DISABLED"
+            ]
+          },
+          "schemaDefinition": {
+            "description": "AVRO schema as JSON string",
+            "type": "string"
+          },
+          "version": {
+            "description": "version of the schema",
+            "type": "number"
+          }
+        },
+        "required": [
+          "domain",
+          "name",
+          "compatibility",
+          "schemaDefinition",
+          "version"
+        ],
+        "example": {
+          "domain": "domain1",
+          "name": "schema1",
+          "compatibility": "BACKWARD_ALL",
+          "schemaDefinition": "{\"type\":\"record\",\"name\":\"schema1\",\"fields\":[{\"name\":\"field1\",\"type\":\"string\",\"default\":\"NONE\"},{\"name\":\"field2\",\"type\":{\"type\":\"record\",\"name\":\"nested_record\",\"fields\":[{\"name\":\"field2a\",\"type\":\"string\",\"default\":\"NONE\"},{\"name\":\"field2b\",\"type\":\"string\",\"default\":\"NONE\"}]},\"default\":{}}]}",
+          "version": 1
+        }
+      },
+      "apiError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "The HTTP error code.",
+            "type": "integer"
+          },
+          "error": {
+            "description": "The error that occurred.",
+            "type": "string"
+          },
+          "message": {
+            "description": "A description of the error.",
+            "type": "string"
+          },
+          "other": {
+            "description": "Optional additional information. *This field can be omitted or renamed.",
+            "type": "object"
+          }
+        },
+        "example": {
+          "InvalidParameters": {
+            "code": 400,
+            "error": "IllegalArgumentException",
+            "message": "Invalid parameters or JSON were provided."
+          },
+          "DomainDoesNotExist": {
+            "code": 400,
+            "error": "Invalid Domain",
+            "message": "The domain does not exist."
+          },
+          "DisabledService": {
+            "code": 403,
+            "error": "ServiceException",
+            "message": "The service is not enabled."
+          },
+          "NotFound": {
+            "code": 404,
+            "error": "Not Found",
+            "message": "The item does not exist."
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "oAuthSample": {
+        "type": "oauth2",
+        "description": "This API uses OAuth 2 with the implicit grant flow. [More info](https://api.example.com/docs/auth)",
+        "flows": {
+          "implicit": {
+            "authorizationUrl": "https://login.microsoftonline.com/aa827ac4-4665-4dbb-98fa-fa4931a84709/oauth2/v2.0/authorize",
+            "scopes": {
+              "Domains": "Domains information",
+              "Sources": "Sources information",
+              "Datasets": "Datasets information",
+              "Products": "Products information",
+              "Schema": "Schema information"
+            }
+          }
+        }
+      }
+    }
+  }
+}
